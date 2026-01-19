@@ -1,5 +1,6 @@
 package com.fritte.eveonline.ui.compose
 
+import android.content.Intent
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -16,6 +17,7 @@ fun LoginScreen(vm: AuthViewModel) {
             val uri = vm.startLogin()
 
             val intent = CustomTabsIntent.Builder().build()
+            intent.intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             intent.launchUrl(context, uri)
         }
     ) {

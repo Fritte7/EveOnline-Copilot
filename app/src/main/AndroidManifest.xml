@@ -38,8 +38,7 @@
 
                 <data
                     android:scheme="eveauth-androidtracker"
-                    android:host="auth"
-                    android:path="/callback" />
+                    android:host="callback" />
             </intent-filter>
         </activity>
 

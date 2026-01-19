@@ -1,9 +1,10 @@
 package com.fritte.eveonline.ui.auth
 
+import android.util.Log
 import com.fritte.eveonline.data.network.api.EVESsoAPI
-import com.fritte.eveonline.data.network.TokenStore
 import com.fritte.eveonline.data.model.eve.EveAuthConfig
 import com.fritte.eveonline.data.model.eve.buildAuthorizeUri
+import com.fritte.eveonline.data.repo.TokenStore
 import com.fritte.eveonline.utils.Pkce
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -40,6 +41,8 @@ class EveAuthManager(
             codeVerifier = verifier,
             redirectUri = cfg.redirectUri,
         )
+
+        Log.d("EveAuthManager", "handleAuthCode: ${tokens.expires_in}")
 
         tokenStore.saveTokens(tokens.access_token, tokens.refresh_token)
 

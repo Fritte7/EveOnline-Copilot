@@ -1,6 +1,7 @@
 package com.fritte.eveonline.data.network
 
 import com.fritte.eveonline.BuildConfig
+import com.fritte.eveonline.data.repo.TokenStore
 import okhttp3.Interceptor
 import okhttp3.Response
 

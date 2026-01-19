@@ -1,3 +1,4 @@
+import com.android.tools.build.jetifier.core.utils.Log
 import java.util.Properties
 
 plugins {
@@ -71,8 +72,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
         release {
             isMinifyEnabled = false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -127,4 +135,7 @@ dependencies {
 
     // Browser
     implementation(libs.browser)
+    
+    // Datastore
+    implementation(libs.androidx.datastore.preferences)
 }

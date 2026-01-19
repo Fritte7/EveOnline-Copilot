@@ -1,6 +1,7 @@
 package com.fritte.eveonline.data.network
 
 import com.fritte.eveonline.data.network.api.EVESsoAPI
+import com.fritte.eveonline.data.repo.TokenStore
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response

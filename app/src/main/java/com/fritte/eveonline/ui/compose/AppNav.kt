@@ -1,5 +1,6 @@
 package com.fritte.eveonline.ui.compose
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.navigation.compose.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -13,18 +14,25 @@ fun AppNav() {
     val vm: AuthViewModel = koinViewModel()
     val state by vm.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) { vm.checkSession() }
-
     // React to auth state changes
     LaunchedEffect(state) {
+        val current = navController.currentDestination?.route
+        Log.d("AppNav", "Current route: $current")
+        Log.d("AppNav", "State: $state")
+
         when (state) {
-            AuthState.LoggedIn -> navController.navigate("main") {
-                popUpTo("login") { inclusive = true }
-                launchSingleTop = true
+            AuthState.LoggedIn -> if (current != "main") {
+                navController.navigate("main") {
+                    popUpTo(0)
+                    launchSingleTop = true
+                }
             }
-            AuthState.LoggedOut -> navController.navigate("login") {
-                popUpTo(0)
-                launchSingleTop = true
+            AuthState.LoggedOut -> if (current != "login") {
+                Log.d("AppNav", "Logged out")
+                navController.navigate("login") {
+                    popUpTo("main") { inclusive = true }
+                    launchSingleTop = true
+                }
             }
             AuthState.Loading -> Unit
         }
@@ -32,7 +40,7 @@ fun AppNav() {
 
     NavHost(
         navController = navController,
-        startDestination = "login" // will be replaced by LaunchedEffect once state resolves
+        startDestination = "login"
     ) {
         composable("login") { LoginScreen(vm) }
         composable("main") { MainScreen() }

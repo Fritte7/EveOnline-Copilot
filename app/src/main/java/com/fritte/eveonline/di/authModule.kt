@@ -2,8 +2,6 @@ package com.fritte.eveonline.di
 
 import com.fritte.eveonline.BuildConfig
 import com.fritte.eveonline.data.model.eve.EveAuthConfig
-import com.fritte.eveonline.data.network.InMemoryTokenStore
-import com.fritte.eveonline.data.network.TokenStore
 import com.fritte.eveonline.ui.auth.AuthViewModel
 import com.fritte.eveonline.ui.auth.EveAuthManager
 import org.koin.core.module.dsl.viewModel
@@ -11,6 +9,7 @@ import org.koin.dsl.module
 
 // TODO add any esi- scopes permission
 val authModule = module {
+
     single {
         EveAuthConfig(
             clientId = BuildConfig.EVE_CLIENT_ID,
