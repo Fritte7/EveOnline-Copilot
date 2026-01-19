@@ -1,6 +1,5 @@
 package com.fritte.eveonline.ui.compose
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.navigation.compose.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -17,9 +16,6 @@ fun AppNav() {
     // React to auth state changes
     LaunchedEffect(state) {
         val current = navController.currentDestination?.route
-        Log.d("AppNav", "Current route: $current")
-        Log.d("AppNav", "State: $state")
-
         when (state) {
             AuthState.LoggedIn -> if (current != "main") {
                 navController.navigate("main") {
@@ -28,7 +24,6 @@ fun AppNav() {
                 }
             }
             AuthState.LoggedOut -> if (current != "login") {
-                Log.d("AppNav", "Logged out")
                 navController.navigate("login") {
                     popUpTo("main") { inclusive = true }
                     launchSingleTop = true

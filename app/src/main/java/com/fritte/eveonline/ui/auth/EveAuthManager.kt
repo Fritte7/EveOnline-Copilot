@@ -1,11 +1,14 @@
 package com.fritte.eveonline.ui.auth
 
+import android.util.Base64
 import android.util.Log
 import com.fritte.eveonline.data.network.api.EVESsoAPI
 import com.fritte.eveonline.data.model.eve.EveAuthConfig
+import com.fritte.eveonline.data.model.eve.EveJwtClaims
 import com.fritte.eveonline.data.model.eve.buildAuthorizeUri
 import com.fritte.eveonline.data.repo.TokenStore
 import com.fritte.eveonline.utils.Pkce
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -13,6 +16,7 @@ class EveAuthManager(
     private val cfg: EveAuthConfig,
     private val ssoApi: EVESsoAPI,
     private val tokenStore: TokenStore,
+    private val moshi: Moshi,
 ) {
     private val mutex = Mutex()
 
@@ -42,9 +46,16 @@ class EveAuthManager(
             redirectUri = cfg.redirectUri,
         )
 
-        Log.d("EveAuthManager", "handleAuthCode: ${tokens.expires_in}")
+        Log.d("EveAuthManager", "handleAuthCode: ${tokens.access_token}")
+
+        val claims = parseJwtClaims(tokens.access_token, moshi)
+        val characterId = characterIdFromSub(claims.sub)
+        val characterName = claims.name ?: "Unknown"
+
+        Log.d("EveAuthManager", "handleAuthCode: $characterId, $characterName")
 
         tokenStore.saveTokens(tokens.access_token, tokens.refresh_token)
+        tokenStore.saveSession(characterId, characterName)
 
         // Clear pending values (one-time use)
         pendingState = null
@@ -52,4 +63,27 @@ class EveAuthManager(
 
         return true
     }
+
+    fun parseJwtClaims(token: String, moshi: Moshi): EveJwtClaims {
+        val parts = token.split(".")
+        require(parts.size >= 2) { "Invalid JWT" }
+
+        val payloadJson = String(
+            Base64.decode(
+                parts[1],
+                Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING
+            ),
+            Charsets.UTF_8
+        )
+
+        return moshi.adapter(EveJwtClaims::class.java)
+            .fromJson(payloadJson)
+            ?: error("Failed to parse JWT claims")
+    }
+
+    fun characterIdFromSub(sub: String): Long {
+        // sub = "CHARACTER:EVE:123456789"
+        return sub.substringAfterLast(":").toLong()
+    }
+
 }

@@ -19,7 +19,7 @@ val authModule = module {
     }
 
     single {
-        EveAuthManager(get(), get(), get())
+        EveAuthManager(get(), get(), get(), get())
     }
 
     viewModel {
