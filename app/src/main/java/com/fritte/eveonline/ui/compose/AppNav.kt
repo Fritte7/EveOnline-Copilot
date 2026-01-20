@@ -5,18 +5,44 @@ import androidx.navigation.compose.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fritte.eveonline.ui.auth.AuthState
 import com.fritte.eveonline.ui.auth.AuthViewModel
+import com.fritte.eveonline.ui.states.StartupState
+import com.fritte.eveonline.ui.viewmodel.StartupViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppNav() {
     val navController = rememberNavController()
-    val vm: AuthViewModel = koinViewModel()
-    val state by vm.state.collectAsStateWithLifecycle()
+    val bootVm: StartupViewModel = koinViewModel()
+    val authVm: AuthViewModel = koinViewModel()
+    val bootState by bootVm.state.collectAsStateWithLifecycle()
+    val authState by authVm.state.collectAsStateWithLifecycle()
 
-    // React to auth state changes
-    LaunchedEffect(state) {
+    NavHost(
+        navController = navController,
+        startDestination = "boot"
+    ) {
+        composable("boot") {
+            BootScreen(
+                bootVm,
+                onReady = {
+                    navController.navigate("gate") {
+                        popUpTo("boot") { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+            )
+        }
+        composable("gate") { GateScreen() }
+        composable("login") { LoginScreen(authVm) }
+        composable("main") { MainScreen() }
+    }
+
+    LaunchedEffect(bootState, authState) {
         val current = navController.currentDestination?.route
-        when (state) {
+
+        if (bootState != StartupState.Ready) return@LaunchedEffect
+
+        when (authState) {
             AuthState.LoggedIn -> if (current != "main") {
                 navController.navigate("main") {
                     popUpTo(0)
@@ -31,13 +57,5 @@ fun AppNav() {
             }
             AuthState.Loading -> Unit
         }
-    }
-
-    NavHost(
-        navController = navController,
-        startDestination = "login"
-    ) {
-        composable("login") { LoginScreen(vm) }
-        composable("main") { MainScreen() }
     }
 }
