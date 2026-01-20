@@ -1,7 +1,6 @@
 package com.fritte.eveonline.data.repo
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
@@ -42,7 +41,6 @@ class DataStoreTokenRepo(private val context: Context) : TokenStore {
         context.dataStore.data.map { it[KEY_CHARACTER_NAME] }.firstOrNull()
 
     override suspend fun saveTokens(accessToken: String, refreshToken: String?) {
-        Log.d("DataStoreTokenRepo", "Saving tokens: $accessToken, $refreshToken")
         context.dataStore.edit { prefs ->
             prefs[KEY_ACCESS] = accessToken
             if (refreshToken != null) prefs[KEY_REFRESH] = refreshToken

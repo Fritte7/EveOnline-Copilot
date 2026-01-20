@@ -8,16 +8,16 @@ import androidx.room.Query
 
 @Dao
 interface SystemDao {
-    @Query("SELECT COUNT(*) FROM system")
+    @Query("SELECT COUNT(*) FROM systementity")
     suspend fun countSystems(): Int
 
-    @Query("SELECT * FROM system")
+    @Query("SELECT * FROM systementity")
     fun getAll(): List<SystemEntity>
 
-    @Query("SELECT * FROM system WHERE name = :name")
+    @Query("SELECT * FROM systementity WHERE name = :name")
     fun getSystemByName(name: String): SystemEntity?
 
-    @Query("SELECT * FROM system WHERE constellation = :constellationName")
+    @Query("SELECT * FROM systementity WHERE constellation = :constellationName")
     fun getSystemsByConstellation(constellationName: String): List<SystemEntity>
 
     @Insert
@@ -26,6 +26,6 @@ interface SystemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<SystemEntity>)
 
-    @Query("DELETE FROM system")
+    @Query("DELETE FROM systementity")
     fun deleteAll()
 }
