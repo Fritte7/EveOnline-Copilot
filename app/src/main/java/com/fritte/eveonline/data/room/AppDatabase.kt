@@ -6,6 +6,7 @@ import androidx.room.TypeConverters
 import com.fritte.eveonline.data.room.dao.ConstellationDao
 import com.fritte.eveonline.data.room.dao.RegionDao
 import com.fritte.eveonline.data.room.dao.SystemDao
+import com.fritte.eveonline.data.room.dao.VisitedSystemDao
 import com.fritte.eveonline.data.room.entities.ConstellationEntity
 import com.fritte.eveonline.data.room.entities.RegionEntity
 import com.fritte.eveonline.data.room.entities.SystemEntity
@@ -26,4 +27,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun systemDao(): SystemDao
     abstract fun regionDao(): RegionDao
     abstract fun constellationDao(): ConstellationDao
+    abstract fun visitedSystemDao(): VisitedSystemDao
 }

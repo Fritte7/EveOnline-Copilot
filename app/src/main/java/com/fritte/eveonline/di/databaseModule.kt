@@ -20,4 +20,5 @@ val databaseModule = module {
     single { get<AppDatabase>().systemDao() }
     single { get<AppDatabase>().regionDao() }
     single { get<AppDatabase>().constellationDao() }
+    single { get<AppDatabase>().visitedSystemDao() }
 }
