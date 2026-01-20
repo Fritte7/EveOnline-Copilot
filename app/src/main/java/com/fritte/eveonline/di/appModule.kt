@@ -1,6 +1,6 @@
 package com.fritte.eveonline.di
 
-import com.fritte.eveonline.data.AnoikisImporter
+import com.fritte.eveonline.data.repo.AnoikisImporterRepository
 import com.fritte.eveonline.data.repo.LocationRepositoryImpl
 import com.fritte.eveonline.ui.auth.AuthViewModel
 import com.fritte.eveonline.ui.viewmodel.LocationViewModel
@@ -11,7 +11,7 @@ import org.koin.dsl.module
 val appModule = module {
 
     single {
-        AnoikisImporter(get(), get(), get())
+        AnoikisImporterRepository(get(), get(), get())
     }
 
     single {

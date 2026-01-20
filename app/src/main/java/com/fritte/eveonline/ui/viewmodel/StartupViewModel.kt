@@ -2,14 +2,14 @@ package com.fritte.eveonline.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fritte.eveonline.data.AnoikisImporter
+import com.fritte.eveonline.data.repo.AnoikisImporterRepository
 import com.fritte.eveonline.ui.states.StartupState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class StartupViewModel(
-    private val anoikisImporter: AnoikisImporter
+    private val anoikisImporterRepository: AnoikisImporterRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<StartupState>(StartupState.Booting)
@@ -19,7 +19,7 @@ class StartupViewModel(
         viewModelScope.launch {
             try {
                 _state.value = StartupState.Booting
-                anoikisImporter.importIfNeeded()
+                anoikisImporterRepository.importIfNeeded()
                 _state.value = StartupState.Ready
             } catch (t: Throwable) {
                 _state.value = StartupState.Error(t.message ?: "Startup failed")

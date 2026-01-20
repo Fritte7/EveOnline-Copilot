@@ -6,16 +6,16 @@ import androidx.room.TypeConverters
 import com.fritte.eveonline.data.room.dao.ConstellationDao
 import com.fritte.eveonline.data.room.dao.RegionDao
 import com.fritte.eveonline.data.room.dao.SystemDao
-import com.fritte.eveonline.data.room.entities.Constellation
-import com.fritte.eveonline.data.room.entities.Region
-import com.fritte.eveonline.data.room.entities.System
+import com.fritte.eveonline.data.room.entities.ConstellationEntity
+import com.fritte.eveonline.data.room.entities.RegionEntity
+import com.fritte.eveonline.data.room.entities.SystemEntity
 import com.fritte.eveonline.data.room.utils.Converters
 
 @Database(
     entities = [
-        System::class,
-        Region::class,
-        Constellation::class,
+        SystemEntity::class,
+        RegionEntity::class,
+        ConstellationEntity::class,
     ],
     version = 1
 )

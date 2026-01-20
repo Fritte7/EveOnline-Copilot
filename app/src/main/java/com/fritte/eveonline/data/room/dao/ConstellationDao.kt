@@ -4,24 +4,24 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.fritte.eveonline.data.room.entities.Constellation
+import com.fritte.eveonline.data.room.entities.ConstellationEntity
 
 @Dao
 interface ConstellationDao {
     @Query("SELECT * FROM constellation")
-    fun getAllConstellations(): List<Constellation>
+    fun getAllConstellations(): List<ConstellationEntity>
 
     @Query("SELECT * FROM constellation WHERE name = :name")
-    fun getConstellationByName(name: String): Constellation?
+    fun getConstellationByName(name: String): ConstellationEntity?
 
     @Query("SELECT * FROM constellation WHERE region = :regionName")
-    fun getConstellationsByRegion(regionName: Int): List<Constellation>
+    fun getConstellationsByRegion(regionName: Int): List<ConstellationEntity>
 
     @Insert
-    suspend fun insertConstellation(constellation: Constellation)
+    suspend fun insertConstellation(constellationEntity: ConstellationEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(items: List<Constellation>)
+    suspend fun insertAll(items: List<ConstellationEntity>)
 
     @Query("DELETE FROM constellation")
     fun deleteAll()
