@@ -2,9 +2,13 @@ package com.fritte.eveonline.data.room.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    tableName = "constellation",
+    indices = [Index("name")]
+)
 data class ConstellationEntity(
     @PrimaryKey
     @ColumnInfo(name = "name") val name: String,

@@ -8,10 +8,10 @@ import com.fritte.eveonline.data.room.entities.RegionEntity
 
 @Dao
 interface RegionDao {
-    @Query("SELECT * FROM regionentity")
+    @Query("SELECT * FROM region")
     fun getAllRegions(): List<RegionEntity>
 
-    @Query("SELECT * FROM regionentity WHERE name = :name")
+    @Query("SELECT * FROM region WHERE name = :name")
     fun getRegionByName(name: String): RegionEntity?
 
     @Insert
@@ -20,6 +20,6 @@ interface RegionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<RegionEntity>)
 
-    @Query("DELETE FROM regionentity")
+    @Query("DELETE FROM region")
     fun deleteAll()
 }
