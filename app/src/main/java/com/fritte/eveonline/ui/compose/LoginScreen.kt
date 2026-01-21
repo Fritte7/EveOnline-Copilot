@@ -6,7 +6,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.fritte.eveonline.ui.auth.AuthViewModel
+import com.fritte.eveonline.ui.viewmodel.AuthViewModel
 
 @Composable
 fun LoginScreen(

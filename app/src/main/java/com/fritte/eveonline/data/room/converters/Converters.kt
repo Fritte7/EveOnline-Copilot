@@ -1,4 +1,4 @@
-package com.fritte.eveonline.data.room.utils
+package com.fritte.eveonline.data.room.converters
 
 import androidx.room.TypeConverter
 
@@ -8,4 +8,3 @@ class Converters {
     @TypeConverter fun fromStringList(v: List<String>): String = v.joinToString(",")
     @TypeConverter fun toStringList(v: String): List<String> = if (v.isBlank()) emptyList() else v.split(",")
 }
-

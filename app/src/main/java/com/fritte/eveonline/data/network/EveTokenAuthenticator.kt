@@ -1,7 +1,7 @@
 package com.fritte.eveonline.data.network
 
 import com.fritte.eveonline.data.network.api.EVESsoAPI
-import com.fritte.eveonline.data.repo.TokenStore
+import com.fritte.eveonline.domain.repository.DataStoreTokenRepository
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
@@ -9,7 +9,7 @@ import okhttp3.Route
 import kotlinx.coroutines.runBlocking
 
 class EveTokenAuthenticator(
-    private val tokenStore: TokenStore,
+    private val tokenStore: DataStoreTokenRepository,
     private val ssoApi: EVESsoAPI,
     private val clientId: String,
 ) : Authenticator {

@@ -11,7 +11,7 @@ import com.fritte.eveonline.data.room.entities.ConstellationEntity
 import com.fritte.eveonline.data.room.entities.RegionEntity
 import com.fritte.eveonline.data.room.entities.SystemEntity
 import com.fritte.eveonline.data.room.entities.VisitedSystemEntity
-import com.fritte.eveonline.data.room.utils.Converters
+import com.fritte.eveonline.data.room.converters.Converters
 
 @Database(
     entities = [

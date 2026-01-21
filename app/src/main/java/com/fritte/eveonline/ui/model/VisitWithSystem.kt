@@ -1,4 +1,4 @@
-package com.fritte.eveonline.data.model.ui
+package com.fritte.eveonline.ui.model
 
 data class VisitWithSystem(
     val systemId: Long,

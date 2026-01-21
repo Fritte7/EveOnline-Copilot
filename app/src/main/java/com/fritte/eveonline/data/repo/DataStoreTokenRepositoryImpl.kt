@@ -3,26 +3,16 @@ package com.fritte.eveonline.data.repo
 import android.content.Context
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import com.fritte.eveonline.domain.repository.DataStoreTokenRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
 private val Context.dataStore by preferencesDataStore(name = "eve_session")
 
-interface TokenStore {
-    val hasSessionFlow: Flow<Boolean>
-    val characterIdFlow: Flow<Long?>
-    val characterNameFlow: Flow<String?>
-
-    suspend fun getAccessToken(): String?
-    suspend fun getRefreshToken(): String?
-    suspend fun getCharacterId(): Long?
-    suspend fun getCharacterName(): String?
-    suspend fun saveTokens(accessToken: String, refreshToken: String?)
-    suspend fun saveSession(characterID: Long, characterName: String)
-}
-
-class DataStoreTokenRepo(private val context: Context) : TokenStore {
+class DataStoreTokenRepositoryImpl(
+    private val context: Context
+) : DataStoreTokenRepository {
 
     private val KEY_ACCESS = stringPreferencesKey("access_token")
     private val KEY_REFRESH = stringPreferencesKey("refresh_token")

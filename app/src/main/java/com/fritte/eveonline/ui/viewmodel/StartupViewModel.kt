@@ -2,7 +2,7 @@ package com.fritte.eveonline.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fritte.eveonline.data.repo.AnoikisImporterRepository
+import com.fritte.eveonline.domain.repository.AnoikisImporterRepository
 import com.fritte.eveonline.ui.states.StartupState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

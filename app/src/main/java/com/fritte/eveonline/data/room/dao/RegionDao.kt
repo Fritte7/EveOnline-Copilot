@@ -9,13 +9,13 @@ import com.fritte.eveonline.data.room.entities.RegionEntity
 @Dao
 interface RegionDao {
     @Query("SELECT * FROM region")
-    fun getAllRegions(): List<RegionEntity>
+    suspend fun getAllRegions(): List<RegionEntity>
 
     @Query("SELECT * FROM region WHERE regionId = :id")
-    fun getRegionById(id: Long): RegionEntity?
+    suspend fun getRegionById(id: Long): RegionEntity?
 
     @Query("SELECT * FROM region WHERE name = :name")
-    fun getRegionByName(name: String): RegionEntity?
+    suspend fun getRegionByName(name: String): RegionEntity?
 
     @Insert
     suspend fun insertRegion(regionEntity: RegionEntity)

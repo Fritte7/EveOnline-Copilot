@@ -1,4 +1,4 @@
-package com.fritte.eveonline.data.model.eve
+package com.fritte.eveonline.data.model.auth
 
 data class EveJwtClaims(
     val sub: String,

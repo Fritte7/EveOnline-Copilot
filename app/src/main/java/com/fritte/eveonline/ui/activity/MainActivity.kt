@@ -1,4 +1,4 @@
-package com.fritte.eveonline.ui.screens
+package com.fritte.eveonline.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

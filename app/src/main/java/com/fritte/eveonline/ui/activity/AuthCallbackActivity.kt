@@ -1,10 +1,10 @@
-package com.fritte.eveonline.ui.auth
+package com.fritte.eveonline.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.fritte.eveonline.ui.screens.MainActivity
+import com.fritte.eveonline.data.model.auth.EveAuthManager
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 

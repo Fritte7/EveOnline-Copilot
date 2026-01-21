@@ -1,8 +1,7 @@
-package com.fritte.eveonline.data.model.eve
+package com.fritte.eveonline.data.model.auth
 
 import android.net.Uri
 import com.fritte.eveonline.BuildConfig
-import com.fritte.eveonline.utils.PkceData
 import androidx.core.net.toUri
 
 data class EveAuthConfig(

@@ -1,4 +1,4 @@
-package com.fritte.eveonline.utils
+package com.fritte.eveonline.data.network
 
 import com.fritte.eveonline.ui.states.UiState
 

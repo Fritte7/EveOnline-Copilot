@@ -14,8 +14,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.*
-import com.fritte.eveonline.ui.auth.AuthState
-import com.fritte.eveonline.ui.auth.AuthViewModel
+import com.fritte.eveonline.ui.states.AuthState
+import com.fritte.eveonline.ui.viewmodel.AuthViewModel
 import com.fritte.eveonline.ui.states.StartupState
 import com.fritte.eveonline.ui.viewmodel.StartupViewModel
 import org.koin.androidx.compose.koinViewModel

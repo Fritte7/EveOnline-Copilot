@@ -1,5 +1,5 @@
 package com.fritte.eveonline.data.network.api
-import com.fritte.eveonline.data.model.eve.OAuthTokenResponse
+import com.fritte.eveonline.data.model.auth.OAuthTokenResponse
 import retrofit2.http.*
 
 interface EVESsoAPI {

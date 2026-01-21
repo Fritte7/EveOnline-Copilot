@@ -17,7 +17,7 @@
         android:theme="@style/Theme.EveOnlineCopilot">
 
         <activity
-            android:name=".ui.screens.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
@@ -27,7 +27,7 @@
         </activity>
 
         <activity
-            android:name=".ui.auth.AuthCallbackActivity"
+            android:name=".ui.activity.AuthCallbackActivity"
             android:exported="true"
             android:launchMode="singleTask">
 

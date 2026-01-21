@@ -12,23 +12,23 @@ interface SystemDao {
     suspend fun countSystems(): Int
 
     @Query("SELECT * FROM system")
-    fun getAll(): List<SystemEntity>
+    suspend fun getAll(): List<SystemEntity>
 
     @Query("SELECT * FROM system WHERE systemId = :id")
-    fun getSystemById(id: Long): SystemEntity?
+    suspend fun getSystemById(id: Long): SystemEntity?
 
     @Query("SELECT * FROM system WHERE name = :name")
-    fun getSystemByName(name: String): SystemEntity?
+    suspend fun getSystemByName(name: String): SystemEntity?
 
     @Query("SELECT * FROM system WHERE constellationId = :constellationId")
-    fun getSystemsByConstellation(constellationId: Long): List<SystemEntity>
+    suspend fun getSystemsByConstellation(constellationId: Long): List<SystemEntity>
 
     @Insert
-    fun insert(systemEntity: SystemEntity)
+    suspend fun insert(systemEntity: SystemEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<SystemEntity>)
 
     @Query("DELETE FROM system")
-    fun deleteAll()
+    suspend fun deleteAll()
 }

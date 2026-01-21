@@ -9,16 +9,16 @@ import com.fritte.eveonline.data.room.entities.ConstellationEntity
 @Dao
 interface ConstellationDao {
     @Query("SELECT * FROM constellation")
-    fun getAllConstellations(): List<ConstellationEntity>
+    suspend fun getAllConstellations(): List<ConstellationEntity>
 
     @Query("SELECT * FROM constellation WHERE constellationId = :id")
-    fun getConstellationById(id: Long): ConstellationEntity?
+    suspend fun getConstellationById(id: Long): ConstellationEntity?
 
     @Query("SELECT * FROM constellation WHERE name = :name")
-    fun getConstellationByName(name: String): ConstellationEntity?
+    suspend fun getConstellationByName(name: String): ConstellationEntity?
 
     @Query("SELECT * FROM constellation WHERE regionId = :regionId")
-    fun getConstellationsByRegion(regionId: Long): List<ConstellationEntity>
+    suspend fun getConstellationsByRegion(regionId: Long): List<ConstellationEntity>
 
     @Insert
     suspend fun insertConstellation(constellationEntity: ConstellationEntity)
@@ -27,5 +27,5 @@ interface ConstellationDao {
     suspend fun insertAll(items: List<ConstellationEntity>)
 
     @Query("DELETE FROM constellation")
-    fun deleteAll()
+    suspend fun deleteAll()
 }

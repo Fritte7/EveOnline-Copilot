@@ -1,12 +1,9 @@
-package com.fritte.eveonline.ui.auth
+package com.fritte.eveonline.data.model.auth
 
+import android.net.Uri
 import android.util.Base64
 import com.fritte.eveonline.data.network.api.EVESsoAPI
-import com.fritte.eveonline.data.model.eve.EveAuthConfig
-import com.fritte.eveonline.data.model.eve.EveJwtClaims
-import com.fritte.eveonline.data.model.eve.buildAuthorizeUri
-import com.fritte.eveonline.data.repo.TokenStore
-import com.fritte.eveonline.utils.Pkce
+import com.fritte.eveonline.domain.repository.DataStoreTokenRepository
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -14,7 +11,7 @@ import kotlinx.coroutines.sync.withLock
 class EveAuthManager(
     private val cfg: EveAuthConfig,
     private val ssoApi: EVESsoAPI,
-    private val tokenStore: TokenStore,
+    private val tokenStore: DataStoreTokenRepository,
     private val moshi: Moshi,
 ) {
     private val mutex = Mutex()
@@ -23,7 +20,7 @@ class EveAuthManager(
     @Volatile private var pendingVerifier: String? = null
     @Volatile private var pendingState: String? = null
 
-    fun startLogin(): Pair<android.net.Uri, Unit> {
+    fun startLogin(): Pair<Uri, Unit> {
         val pkce = Pkce.generate()
         pendingVerifier = pkce.verifier
         pendingState = pkce.state

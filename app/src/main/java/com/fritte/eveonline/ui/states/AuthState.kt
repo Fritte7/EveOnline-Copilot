@@ -1,4 +1,4 @@
-package com.fritte.eveonline.ui.auth
+package com.fritte.eveonline.ui.states
 
 sealed interface AuthState {
     data object Loading : AuthState

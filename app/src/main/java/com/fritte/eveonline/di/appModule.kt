@@ -1,9 +1,12 @@
 package com.fritte.eveonline.di
 
-import com.fritte.eveonline.data.repo.AnoikisImporterRepository
-import com.fritte.eveonline.data.repo.LocationRepository
+import com.fritte.eveonline.data.repo.AnoikisImporterRepositoryImpl
 import com.fritte.eveonline.data.repo.LocationRepositoryImpl
-import com.fritte.eveonline.ui.auth.AuthViewModel
+import com.fritte.eveonline.domain.repository.AnoikisImporterRepository
+import com.fritte.eveonline.domain.repository.LocationRepository
+import com.fritte.eveonline.domain.usecase.GetLocationUIUseCase
+import com.fritte.eveonline.domain.usecase.GetOnlineStatusUseCase
+import com.fritte.eveonline.ui.viewmodel.AuthViewModel
 import com.fritte.eveonline.ui.viewmodel.LocationViewModel
 import com.fritte.eveonline.ui.viewmodel.StartupViewModel
 import org.koin.core.module.dsl.viewModel
@@ -11,16 +14,24 @@ import org.koin.dsl.module
 
 val appModule = module {
 
-    single {
-        AnoikisImporterRepository(get(), get(), get())
+    single<AnoikisImporterRepository> {
+        AnoikisImporterRepositoryImpl(get(), get(), get())
     }
 
     single<LocationRepository> {
         LocationRepositoryImpl(get())
     }
 
+    single {
+        GetOnlineStatusUseCase(get())
+    }
+
+    single {
+        GetLocationUIUseCase(get(), get())
+    }
+
     viewModel {
-        LocationViewModel(get(), get())
+        LocationViewModel(get(), get(), get())
     }
 
     viewModel {
@@ -30,4 +41,5 @@ val appModule = module {
     viewModel {
         StartupViewModel(get())
     }
+
 }

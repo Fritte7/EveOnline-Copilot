@@ -1,4 +1,5 @@
-package com.fritte.eveonline.utils
+package com.fritte.eveonline.data.model.auth
+
 import android.util.Base64
 import java.security.MessageDigest
 import java.security.SecureRandom

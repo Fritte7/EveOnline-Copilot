@@ -7,21 +7,22 @@ import com.fritte.eveonline.data.room.AppDatabase
 import com.fritte.eveonline.data.room.entities.ConstellationEntity
 import com.fritte.eveonline.data.room.entities.RegionEntity
 import com.fritte.eveonline.data.room.entities.SystemEntity
+import com.fritte.eveonline.domain.repository.AnoikisImporterRepository
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AnoikisImporterRepository(
+class AnoikisImporterRepositoryImpl(
     private val context: Context,
     private val db: AppDatabase,
     private val moshi: Moshi,
-) {
+) : AnoikisImporterRepository {
 
-    suspend fun importIfNeeded(assetFileName: String = "anoikis.json") {
+    override suspend fun importIfNeeded() {
         withContext(Dispatchers.IO) {
             if (db.systemDao().countSystems() > 0) return@withContext
 
-            val json = context.assets.open(assetFileName).bufferedReader().use { it.readText() }
+            val json = context.assets.open("anoikis.json").bufferedReader().use { it.readText() }
 
             val root = moshi.adapter(AnoikisRootDto::class.java)
                 .fromJson(json) ?: error("Failed to parse Anoikis JSON")

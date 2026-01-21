@@ -5,8 +5,8 @@ import com.fritte.eveonline.data.network.BearerTokenInterceptor
 import com.fritte.eveonline.data.network.api.EVEEsiAPI
 import com.fritte.eveonline.data.network.api.EVESsoAPI
 import com.fritte.eveonline.data.network.EveTokenAuthenticator
-import com.fritte.eveonline.data.repo.DataStoreTokenRepo
-import com.fritte.eveonline.data.repo.TokenStore
+import com.fritte.eveonline.data.repo.DataStoreTokenRepositoryImpl
+import com.fritte.eveonline.domain.repository.DataStoreTokenRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -25,7 +25,9 @@ val networkModule = module {
             .build()
     }
 
-    single<TokenStore> { DataStoreTokenRepo(androidContext()) }
+    single<DataStoreTokenRepository> {
+        DataStoreTokenRepositoryImpl(androidContext())
+    }
 
     single(named("ssoRetrofit")) {
         Retrofit.Builder()
