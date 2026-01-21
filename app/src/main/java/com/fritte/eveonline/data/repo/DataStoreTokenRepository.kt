@@ -11,6 +11,9 @@ private val Context.dataStore by preferencesDataStore(name = "eve_session")
 
 interface TokenStore {
     val hasSessionFlow: Flow<Boolean>
+    val characterIdFlow: Flow<Long?>
+    val characterNameFlow: Flow<String?>
+
     suspend fun getAccessToken(): String?
     suspend fun getRefreshToken(): String?
     suspend fun getCharacterId(): Long?
@@ -26,7 +29,14 @@ class DataStoreTokenRepo(private val context: Context) : TokenStore {
     private val KEY_CHARACTER_ID = longPreferencesKey("character_id")
     private val KEY_CHARACTER_NAME = stringPreferencesKey("character_name")
 
-    override val hasSessionFlow: Flow<Boolean> = context.dataStore.data.map { prefs -> !prefs[KEY_REFRESH].isNullOrBlank() }
+    override val hasSessionFlow: Flow<Boolean> =
+        context.dataStore.data.map { prefs -> !prefs[KEY_REFRESH].isNullOrBlank() }
+
+    override val characterIdFlow: Flow<Long?> =
+        context.dataStore.data.map { prefs -> prefs[KEY_CHARACTER_ID] }
+
+    override val characterNameFlow: Flow<String?> =
+        context.dataStore.data.map { prefs -> prefs[KEY_CHARACTER_NAME] }
 
     override suspend fun getAccessToken(): String? =
         context.dataStore.data.map { it[KEY_ACCESS] }.firstOrNull()

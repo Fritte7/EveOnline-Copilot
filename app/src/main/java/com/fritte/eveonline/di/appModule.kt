@@ -1,6 +1,7 @@
 package com.fritte.eveonline.di
 
 import com.fritte.eveonline.data.repo.AnoikisImporterRepository
+import com.fritte.eveonline.data.repo.LocationRepository
 import com.fritte.eveonline.data.repo.LocationRepositoryImpl
 import com.fritte.eveonline.ui.auth.AuthViewModel
 import com.fritte.eveonline.ui.viewmodel.LocationViewModel
@@ -14,12 +15,12 @@ val appModule = module {
         AnoikisImporterRepository(get(), get(), get())
     }
 
-    single {
+    single<LocationRepository> {
         LocationRepositoryImpl(get())
     }
 
     viewModel {
-        LocationViewModel(get())
+        LocationViewModel(get(), get())
     }
 
     viewModel {

@@ -9,7 +9,9 @@ import androidx.compose.ui.platform.LocalContext
 import com.fritte.eveonline.ui.auth.AuthViewModel
 
 @Composable
-fun LoginScreen(vm: AuthViewModel) {
+fun LoginScreen(
+    vm: AuthViewModel
+) {
     val context = LocalContext.current
 
     Button(

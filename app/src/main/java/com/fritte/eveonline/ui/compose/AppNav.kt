@@ -56,8 +56,12 @@ fun AppNav() {
                     bootVm,
                 )
             }
-            composable("login") { LoginScreen(authVm) }
-            composable("main") { MainScreen() }
+            composable("login") {
+                LoginScreen(authVm)
+            }
+            composable("main") {
+                MainScreen()
+            }
         }
     }
 
