@@ -51,16 +51,10 @@ fun AppNav() {
         ) {
             composable("boot") {
                 BootScreen(
+                    modifier = Modifier.padding(innerPadding),
                     bootVm,
-                    onReady = {
-                        navController.navigate("gate") {
-                            popUpTo("boot") { inclusive = true }
-                            launchSingleTop = true
-                        }
-                    },
                 )
             }
-            composable("gate") { GateScreen() }
             composable("login") { LoginScreen(authVm) }
             composable("main") { MainScreen() }
         }
@@ -68,6 +62,17 @@ fun AppNav() {
 
     LaunchedEffect(bootState, authState) {
         val current = navController.currentDestination?.route
+
+        when (bootState) {
+            StartupState.Booting -> Unit
+            StartupState.ImportingStaticData -> Unit
+            StartupState.CheckingAuth -> Unit
+            StartupState.Ready -> Unit
+            StartupState.TerminalDone -> {
+                bootVm.ready()
+            }
+            is StartupState.Error -> return@LaunchedEffect //TODO catch this
+        }
 
         if (bootState != StartupState.Ready) return@LaunchedEffect
 

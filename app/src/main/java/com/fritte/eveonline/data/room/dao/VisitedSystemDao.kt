@@ -26,7 +26,3 @@ interface VisitedSystemDao {
     @Query("DELETE FROM visited_system")
     suspend fun clearAll()
 }
-
-
-
-

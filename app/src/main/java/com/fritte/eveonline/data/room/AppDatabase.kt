@@ -10,6 +10,7 @@ import com.fritte.eveonline.data.room.dao.VisitedSystemDao
 import com.fritte.eveonline.data.room.entities.ConstellationEntity
 import com.fritte.eveonline.data.room.entities.RegionEntity
 import com.fritte.eveonline.data.room.entities.SystemEntity
+import com.fritte.eveonline.data.room.entities.VisitedSystemEntity
 import com.fritte.eveonline.data.room.utils.Converters
 
 @Database(
@@ -17,6 +18,7 @@ import com.fritte.eveonline.data.room.utils.Converters
         SystemEntity::class,
         RegionEntity::class,
         ConstellationEntity::class,
+        VisitedSystemEntity::class
     ],
     version = 1
 )

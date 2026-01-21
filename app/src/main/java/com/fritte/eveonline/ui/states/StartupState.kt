@@ -5,5 +5,6 @@ sealed interface StartupState {
     data object ImportingStaticData : StartupState
     data object CheckingAuth : StartupState
     data object Ready : StartupState
+    data object TerminalDone : StartupState
     data class Error(val message: String) : StartupState
 }
