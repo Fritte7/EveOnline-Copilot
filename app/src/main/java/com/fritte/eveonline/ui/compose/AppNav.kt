@@ -31,7 +31,8 @@ fun AppNav() {
 
     Scaffold(
         topBar = {
-            val route = navController.currentBackStackEntry?.destination?.route
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val route = navBackStackEntry?.destination?.route
             if (route != "boot") {
                 TopAppBar(
                     modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
