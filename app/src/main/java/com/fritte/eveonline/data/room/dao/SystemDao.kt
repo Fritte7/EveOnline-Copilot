@@ -14,11 +14,14 @@ interface SystemDao {
     @Query("SELECT * FROM system")
     fun getAll(): List<SystemEntity>
 
+    @Query("SELECT * FROM system WHERE systemId = :id")
+    fun getSystemById(id: Long): SystemEntity?
+
     @Query("SELECT * FROM system WHERE name = :name")
     fun getSystemByName(name: String): SystemEntity?
 
-    @Query("SELECT * FROM system WHERE constellation = :constellationName")
-    fun getSystemsByConstellation(constellationName: String): List<SystemEntity>
+    @Query("SELECT * FROM system WHERE constellationId = :constellationId")
+    fun getSystemsByConstellation(constellationId: Long): List<SystemEntity>
 
     @Insert
     fun insert(systemEntity: SystemEntity)

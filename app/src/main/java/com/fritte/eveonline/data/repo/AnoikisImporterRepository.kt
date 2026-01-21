@@ -17,7 +17,7 @@ class AnoikisImporterRepository(
     private val moshi: Moshi,
 ) {
 
-    suspend fun importIfNeeded(assetFileName: String = "anoikis_regions_constellations_systems.json") {
+    suspend fun importIfNeeded(assetFileName: String = "anoikis.json") {
         withContext(Dispatchers.IO) {
             if (db.systemDao().countSystems() > 0) return@withContext
 
@@ -31,32 +31,33 @@ class AnoikisImporterRepository(
             val systemEntityEntities = ArrayList<SystemEntity>(3000)
 
             for (r in root.regions) {
-                val constellationNames =
-                    r.constellations.mapNotNull { c -> c.constellation.ifBlank { null } }
+                val constellationIds = r.constellations.map { c -> c.id }
 
                 regionEntityEntities += RegionEntity(
+                    regionId = r.id,
                     name = r.region,
-                    constellations = constellationNames
+                    constellationsIds = constellationIds,
                 )
 
                 for (c in r.constellations) {
-                    val systemNames = c.systems.mapNotNull { s -> s.name.ifBlank { null } }
+                    val systemIds = c.systems.map { s -> s.id }
 
                     constellationEntityEntities += ConstellationEntity(
+                        constellationId = c.id,
                         name = c.constellation,
-                        systems = systemNames,
-                        region = r.region
+                        systemsIds = systemIds,
+                        regionId = r.id
                     )
 
                     for (s in c.systems) {
-                        val sysName = s.name.ifBlank { null } ?: continue
-
                         systemEntityEntities += SystemEntity(
-                            name = sysName,
+                            systemId = s.id,
+                            name = s.name,
                             wormholeClass = s.wormholeClass ?: r.wormholeClass ?: "unknown",
                             effect = s.effect,
                             statics = s.statics ?: emptyList(),
-                            constellation = c.constellation
+                            constellationId = c.id,
+                            alias = s.alias
                         )
                     }
                 }

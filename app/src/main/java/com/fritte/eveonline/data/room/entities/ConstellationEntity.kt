@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
     indices = [Index("name")]
 )
 data class ConstellationEntity(
-    @PrimaryKey
+    @PrimaryKey val constellationId: Long,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "systems") val systems: List<String>,
-    @ColumnInfo(name = "region") val region: String,
+    @ColumnInfo(name = "systemsIds") val systemsIds: List<Long>,
+    @ColumnInfo(name = "regionId") val regionId: Long,
 )

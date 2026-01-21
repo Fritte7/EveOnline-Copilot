@@ -11,11 +11,14 @@ interface ConstellationDao {
     @Query("SELECT * FROM constellation")
     fun getAllConstellations(): List<ConstellationEntity>
 
+    @Query("SELECT * FROM constellation WHERE constellationId = :id")
+    fun getConstellationById(id: Long): ConstellationEntity?
+
     @Query("SELECT * FROM constellation WHERE name = :name")
     fun getConstellationByName(name: String): ConstellationEntity?
 
-    @Query("SELECT * FROM constellation WHERE region = :regionName")
-    fun getConstellationsByRegion(regionName: Int): List<ConstellationEntity>
+    @Query("SELECT * FROM constellation WHERE regionId = :regionId")
+    fun getConstellationsByRegion(regionId: Long): List<ConstellationEntity>
 
     @Insert
     suspend fun insertConstellation(constellationEntity: ConstellationEntity)

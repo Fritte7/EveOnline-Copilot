@@ -10,10 +10,11 @@ import androidx.room.PrimaryKey
     indices = [Index("name")]
 )
 data class SystemEntity(
-    @PrimaryKey
+    @PrimaryKey val systemId: Long,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "wormholeClass") val wormholeClass: String,
     @ColumnInfo(name = "effect") val effect: String?,
     @ColumnInfo(name = "statics") val statics: List<String>,
-    @ColumnInfo(name = "constellation") val constellation: String,
+    @ColumnInfo(name = "constellationId") val constellationId: Long,
+    @ColumnInfo(name = "alias") val alias: String?,
 )
