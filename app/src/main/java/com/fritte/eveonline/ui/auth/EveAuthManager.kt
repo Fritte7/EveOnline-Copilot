@@ -1,7 +1,6 @@
 package com.fritte.eveonline.ui.auth
 
 import android.util.Base64
-import android.util.Log
 import com.fritte.eveonline.data.network.api.EVESsoAPI
 import com.fritte.eveonline.data.model.eve.EveAuthConfig
 import com.fritte.eveonline.data.model.eve.EveJwtClaims
@@ -46,13 +45,9 @@ class EveAuthManager(
             redirectUri = cfg.redirectUri,
         )
 
-        Log.d("EveAuthManager", "handleAuthCode: ${tokens.access_token}")
-
         val claims = parseJwtClaims(tokens.access_token, moshi)
         val characterId = characterIdFromSub(claims.sub)
         val characterName = claims.name ?: "Unknown"
-
-        Log.d("EveAuthManager", "handleAuthCode: $characterId, $characterName")
 
         tokenStore.saveTokens(tokens.access_token, tokens.refresh_token)
         tokenStore.saveSession(characterId, characterName)
