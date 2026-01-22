@@ -14,3 +14,6 @@
 .cxx
 local.properties
 /app/secrets.properties
+/.idea/androidTestResultsUserPreferences.xml
+/.idea/dictionaries/project.xml
+/secrets.properties
