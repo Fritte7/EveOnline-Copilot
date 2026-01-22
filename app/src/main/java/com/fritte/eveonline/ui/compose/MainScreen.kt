@@ -41,10 +41,6 @@ fun MainScreen(
 
             StatusCard(
                 onlineState = onlineState,
-                onRetry = {
-                    // simplest: stop/start happens automatically when characterId exists
-                    // but you can also expose a refresh() if you prefer
-                }
             )
 
             LocationCard(
@@ -58,7 +54,6 @@ fun MainScreen(
 @Composable
 private fun StatusCard(
     onlineState: UiState<CharacterLocationOnline>,
-    onRetry: () -> Unit
 ) {
     Card {
         Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -81,15 +76,11 @@ private fun StatusCard(
                     val online = onlineState.data.online
                     val text = if (online) "Online" else "Offline"
                     Text(text = text)
-
-                    // Optional: show extra fields if your model has them (e.g. last_login)
-                    // Text("Last login: ${onlineState.data.lastLogin}")
                 }
 
                 is UiState.Error -> {
                     Text("Couldn’t fetch online status: ${onlineState.message}")
                     Spacer(Modifier.height(6.dp))
-                    OutlinedButton(onClick = onRetry) { Text("Retry") }
                 }
             }
         }

@@ -35,7 +35,7 @@ fun AppNav() {
         topBar = {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val route = navBackStackEntry?.destination?.route
-            if (route != "boot") {
+            if (route == "main") {
                 TopAppBar(
                     modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
                     title = { Text("Eve Online Copilot") },
