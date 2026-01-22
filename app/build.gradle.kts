@@ -1,4 +1,4 @@
-import com.android.tools.build.jetifier.core.utils.Log
+import org.gradle.api.tasks.testing.Test
 import java.util.Properties
 
 plugins {
@@ -88,8 +88,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         buildConfig = true
@@ -102,9 +102,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.ui.tooling.preview)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
@@ -140,4 +137,17 @@ dependencies {
     
     // Datastore
     implementation(libs.androidx.datastore.preferences)
+
+    // Test
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.moshi.kotlin)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.platform.launcher)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

@@ -1,11 +1,12 @@
 package com.fritte.eveonline.data.model.auth
 
-import android.net.Uri
 import com.fritte.eveonline.data.network.api.EVESsoAPI
+import com.fritte.eveonline.data.util.Logg
 import com.fritte.eveonline.domain.repository.DataStoreTokenRepository
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import java.lang.Exception
 import java.util.Base64
 
 class EveAuthManager(
@@ -20,12 +21,12 @@ class EveAuthManager(
     @Volatile private var pendingVerifier: String? = null
     @Volatile private var pendingState: String? = null
 
-    fun startLogin(): Pair<Uri, Unit> {
+    fun startLogin(): String {
         val pkce = Pkce.generate()
         pendingVerifier = pkce.verifier
         pendingState = pkce.state
-        val uri = buildAuthorizeUri(cfg, pkce)
-        return uri to Unit
+        val uri = buildAuthorizeUrl(cfg, pkce)
+        return uri
     }
 
     suspend fun handleAuthCode(code: String, returnedState: String): Boolean = mutex.withLock {
@@ -35,25 +36,29 @@ class EveAuthManager(
         if (expectedState.isNullOrBlank() || verifier.isNullOrBlank()) return false
         if (returnedState != expectedState) return false
 
-        val tokens = ssoApi.requestToken(
-            code = code,
-            clientId = cfg.clientId,
-            codeVerifier = verifier,
-            redirectUri = cfg.redirectUri,
-        )
+        return try {
+            val tokens = ssoApi.requestToken(
+                code = code,
+                clientId = cfg.clientId,
+                codeVerifier = verifier,
+                redirectUri = cfg.redirectUri,
+            )
 
-        val claims = parseJwtClaims(tokens.access_token, moshi)
-        val characterId = characterIdFromSub(claims.sub)
-        val characterName = claims.name ?: "Unknown"
+            val claims = parseJwtClaims(tokens.access_token, moshi)
+            val characterId = characterIdFromSub(claims.sub)
+            val characterName = claims.name ?: "Unknown"
 
-        tokenStore.saveTokens(tokens.access_token, tokens.refresh_token)
-        tokenStore.saveSession(characterId, characterName)
+            tokenStore.saveTokens(tokens.access_token, tokens.refresh_token)
+            tokenStore.saveSession(characterId, characterName)
 
-        // Clear pending values (one-time use)
-        pendingState = null
-        pendingVerifier = null
+            pendingState = null
+            pendingVerifier = null
 
-        return true
+            true
+        } catch (e: Exception) {
+            Logg.e("EveAuthManager", "handleAuthCode", e)
+            false
+        }
     }
 
     private fun parseJwtClaims(token: String, moshi: Moshi): EveJwtClaims {

@@ -1,26 +1,32 @@
 package com.fritte.eveonline.data.model.auth
 
-import android.net.Uri
-import com.fritte.eveonline.BuildConfig
-import androidx.core.net.toUri
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 data class EveAuthConfig(
     val clientId: String,
     val redirectUri: String,
-    val scopes: List<String>, // e.g. listOf("esi-location.read_location.v1")
+    val scopes: List<String>,
+    val loginBaseUrl: String, // inject instead of BuildConfig
 )
 
-fun buildAuthorizeUri(cfg: EveAuthConfig, pkce: PkceData): Uri {
+fun buildAuthorizeUrl(cfg: EveAuthConfig, pkce: PkceData): String {
     val scopeStr = cfg.scopes.joinToString(" ")
 
-    return "${BuildConfig.EVE_LOGIN_URL}v2/oauth/authorize/".toUri().buildUpon()
-        .appendQueryParameter("response_type", "code")
-        .appendQueryParameter("redirect_uri", cfg.redirectUri)
-        .appendQueryParameter("client_id", cfg.clientId)
-        .appendQueryParameter("scope", scopeStr)
-        .appendQueryParameter("code_challenge", pkce.challenge)
-        .appendQueryParameter("code_challenge_method", "S256")
-        .appendQueryParameter("state", pkce.state)
-        .build()
-}
+    fun enc(s: String) = URLEncoder.encode(s, StandardCharsets.UTF_8.toString())
 
+    val base = cfg.loginBaseUrl + "v2/oauth/authorize/"
+
+    // deterministic ordering helps tests
+    val query = listOf(
+        "response_type" to "code",
+        "redirect_uri" to cfg.redirectUri,
+        "client_id" to cfg.clientId,
+        "scope" to scopeStr,
+        "code_challenge" to pkce.challenge,
+        "code_challenge_method" to "S256",
+        "state" to pkce.state,
+    ).joinToString("&") { (k, v) -> "${enc(k)}=${enc(v)}" }
+
+    return "$base?$query"
+}

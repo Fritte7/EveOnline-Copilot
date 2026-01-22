@@ -17,6 +17,7 @@ val authModule = module {
                 "esi-location.read_ship_type.v1",
                 "esi-location.read_online.v1",
             ),
+            BuildConfig.EVE_LOGIN_URL,
         )
     }
 

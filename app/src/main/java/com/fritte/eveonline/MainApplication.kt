@@ -1,6 +1,8 @@
 package com.fritte.eveonline
 
 import android.app.Application
+import com.fritte.eveonline.data.util.AndroidLogger
+import com.fritte.eveonline.data.util.Logg
 import com.fritte.eveonline.di.appModule
 import com.fritte.eveonline.di.authModule
 import com.fritte.eveonline.di.databaseModule
@@ -12,6 +14,9 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        Logg.logger = AndroidLogger(BuildConfig.DEBUG)
+
         startKoin {
             androidContext(this@MainApplication)
             modules(

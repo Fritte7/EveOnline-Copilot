@@ -1,8 +1,8 @@
 package com.fritte.eveonline.data.model.auth
 
-import android.util.Base64
 import java.security.MessageDigest
 import java.security.SecureRandom
+import java.util.Base64
 
 data class PkceData(
     val verifier: String,
@@ -12,6 +12,7 @@ data class PkceData(
 
 object Pkce {
     private val rng = SecureRandom()
+    private val urlEncoder = Base64.getUrlEncoder().withoutPadding()
 
     fun generate(): PkceData {
         val verifierBytes = ByteArray(32)
@@ -27,7 +28,7 @@ object Pkce {
     private fun sha256(input: ByteArray): ByteArray = MessageDigest.getInstance("SHA-256").digest(input)
 
     private fun base64UrlNoPad(bytes: ByteArray): String =
-        Base64.encodeToString(bytes, Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING)
+        urlEncoder.encodeToString(bytes)
 
     private fun randomUrlSafeString(len: Int): String {
         val bytes = ByteArray(len)

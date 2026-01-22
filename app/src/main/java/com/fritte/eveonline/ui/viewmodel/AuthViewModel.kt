@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import androidx.core.net.toUri
 
 class AuthViewModel(
     private val tokenStore: DataStoreTokenRepository,
@@ -22,7 +23,6 @@ class AuthViewModel(
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), AuthState.Loading)
 
     fun startLogin(): Uri {
-        val (uri, _) = authManager.startLogin()
-        return uri
+        return authManager.startLogin().toUri()
     }
 }
