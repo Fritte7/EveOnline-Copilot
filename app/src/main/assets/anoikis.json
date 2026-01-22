@@ -26795,7 +26795,12 @@
               "name": "Sentinel MZ",
               "wormholeClass": "C14",
               "statics": [
-                "c2"
+                "c1",
+                "c2",
+                "c3",
+                "c4",
+                "c5",
+                "c6"
               ],
               "effect": "Red Giant",
               "alias": "J055520"
@@ -26805,7 +26810,12 @@
               "name": "Liberated Barbican",
               "wormholeClass": "C15",
               "statics": [
-                "c2"
+                "c1",
+                "c2",
+                "c3",
+                "c4",
+                "c5",
+                "c6"
               ],
               "effect": "Cataclysmic Variable",
               "alias": "J110145"
@@ -26815,7 +26825,12 @@
               "name": "Sanctified Vidette",
               "wormholeClass": "C16",
               "statics": [
-                "c2"
+                "c1",
+                "c2",
+                "c3",
+                "c4",
+                "c5",
+                "c6"
               ],
               "effect": "Magnetar",
               "alias": "J164710"
@@ -26825,7 +26840,12 @@
               "name": "Azdaja Redoubt",
               "wormholeClass": "C18",
               "statics": [
-                "c2"
+                "c1",
+                "c2",
+                "c3",
+                "c4",
+                "c5",
+                "c6"
               ],
               "effect": "Wolf-Rayet Star",
               "alias": "J174618"
@@ -26835,7 +26855,12 @@
               "name": "Conflux Eyrie",
               "wormholeClass": "C17",
               "statics": [
-                "c2"
+                "c1",
+                "c2",
+                "c3",
+                "c4",
+                "c5",
+                "c6"
               ],
               "effect": "Pulsar",
               "alias": "J200727"

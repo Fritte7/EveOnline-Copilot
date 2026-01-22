@@ -1,18 +1,14 @@
 package com.fritte.eveonline.ui.compose
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fritte.eveonline.data.model.esi.CharacterLocationOnline
-import com.fritte.eveonline.ui.model.LocationUI
 import com.fritte.eveonline.ui.states.UiState
 import com.fritte.eveonline.ui.viewmodel.LocationViewModel
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     locationVm: LocationViewModel = koinViewModel()
@@ -24,120 +20,71 @@ fun MainScreen(
     DisposableEffect(Unit) {
         onDispose { locationVm.stopPolling() }
     }
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = characterName?.let { "o7 $it" } ?: "o7 Capsuleer") }
-            )
-        }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .padding(padding)
-                .padding(16.dp)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
 
-            StatusCard(
-                onlineState = onlineState,
+    TerminalScaffold(
+        title = characterName?.let { "o7 $it" } ?: "o7 Capsuleer"
+    ) {
+        TerminalPanel {
+            TerminalLine("Handshake: CONCORD relay ...... ${onlineValue(onlineState)}",
+                color = statusColor(onlineValue(onlineState))
             )
-
-            LocationCard(
-                onlineState = onlineState,
-                locationUiState = locationUiState
-            )
-        }
-    }
-}
-
-@Composable
-private fun StatusCard(
-    onlineState: UiState<CharacterLocationOnline>,
-) {
-    Card {
-        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("Pilot Status", style = MaterialTheme.typography.titleMedium)
 
             when (onlineState) {
-                UiState.Idle -> {
-                    Text("Waiting for authentication / character selection…")
-                }
-
-                UiState.Loading -> {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        CircularProgressIndicator(modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.width(10.dp))
-                        Text("Checking online status…")
-                    }
-                }
-
+                UiState.Idle -> TerminalLine("Awaiting authentication / character selection …", color = statusColor("PAUSED"))
+                UiState.Loading -> TerminalLine("Checking online status …", color = statusColor("WARN"))
+                is UiState.Error -> TerminalLine("Online status error: ${onlineState.message}", color = statusColor("ERROR"))
                 is UiState.Success -> {
                     val online = onlineState.data.online
-                    val text = if (online) "Online" else "Offline"
-                    Text(text = text)
-                }
-
-                is UiState.Error -> {
-                    Text("Couldn’t fetch online status: ${onlineState.message}")
-                    Spacer(Modifier.height(6.dp))
+                    TerminalRow("Pilot status", if (online) "ONLINE" else "OFFLINE", valueColor = statusColor(if (online) "ONLINE" else "OFFLINE"))
                 }
             }
         }
-    }
-}
 
-@Composable
-private fun LocationCard(
-    onlineState: UiState<CharacterLocationOnline>,
-    locationUiState: UiState<LocationUI>
-) {
-    val isOnline = (onlineState as? UiState.Success)?.data?.online == true
+        Spacer(Modifier.height(12.dp))
 
-    Card {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text("Location", style = MaterialTheme.typography.titleMedium)
+        TerminalPanel {
+            val isOnline = (onlineState as? UiState.Success)?.data?.online == true
 
-            // Always show something, even offline
+            TerminalRow(
+                label = "Location polling",
+                value = if (isOnline) "ACTIVE" else "PAUSED",
+                valueColor = statusColor(if (isOnline) "OK" else "PAUSED")
+            )
+
             when (locationUiState) {
                 UiState.Idle -> {
-                    Text(if (isOnline) "No location yet." else "Offline — no last known location yet.")
+                    TerminalLine(if (isOnline) "No location yet." else "Offline — no last known location yet.", color = statusColor("PAUSED"))
                 }
 
                 UiState.Loading -> {
-                    // Only show loading while online; offline we keep last known
-                    if (isOnline) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            CircularProgressIndicator(modifier = Modifier.size(18.dp))
-                            Spacer(Modifier.width(10.dp))
-                            Text("Updating location…")
-                        }
-                    } else {
-                        Text("Offline — location polling paused.")
-                    }
+                    TerminalLine(
+                        if (isOnline) "Updating location …" else "Offline — location polling paused.",
+                        color = statusColor(if (isOnline) "WARN" else "PAUSED")
+                    )
                 }
 
                 is UiState.Success -> {
                     val ui = locationUiState.data
-
-                    Text(ui.title)
-                    ui.subtitle?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
+                    TerminalRow("System", ui.title, valueColor = statusColor("OK"))
+                    ui.subtitle?.let { TerminalRow("Detail", it, valueColor = statusColor("OK")) }
 
                     if (!isOnline) {
-                        Text("Offline — location polling paused.")
+                        TerminalLine("Offline — location polling paused.", color = statusColor("PAUSED"))
                     }
                 }
 
                 is UiState.Error -> {
-                    // Still show offline hint if relevant
-                    Text("Couldn’t fetch location: ${locationUiState.message}")
-                    if (!isOnline) Text("Offline — location polling paused.")
+                    TerminalLine("Location error: ${locationUiState.message}", color = statusColor("ERROR"))
+                    if (!isOnline) TerminalLine("Offline — location polling paused.", color = statusColor("PAUSED"))
                 }
             }
         }
     }
 }
 
+private fun onlineValue(state: UiState<CharacterLocationOnline>): String = when (state) {
+    UiState.Idle -> "PAUSED"
+    UiState.Loading -> "…"
+    is UiState.Success -> if (state.data.online) "OK" else "OFFLINE"
+    is UiState.Error -> "FAIL"
+}

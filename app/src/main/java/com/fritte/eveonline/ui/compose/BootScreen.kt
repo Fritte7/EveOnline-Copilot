@@ -25,11 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fritte.eveonline.theme.EveColors
 import com.fritte.eveonline.ui.states.StartupState
 import com.fritte.eveonline.ui.viewmodel.StartupViewModel
 import kotlinx.coroutines.channels.Channel
@@ -208,8 +208,7 @@ fun BootScreen(
     }
 
     // Terminal styling
-    val bg = Color(0xFF031005)
-    val green = Color(0xFF39FF14)
+    val green = EveColors.Primary
     val terminalStyle = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontSize = 16.sp,
@@ -219,15 +218,8 @@ fun BootScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(
-                Brush.radialGradient(
-                    colors = listOf(Color(0xFF0B2A12), bg),
-                    radius = 900f
-                )
-            )
             .padding(20.dp)
     ) {
-        // Glow layer (optional, this is why it looked "duplicated")
         Text(
             text = displayText,
             modifier = Modifier
@@ -237,7 +229,6 @@ fun BootScreen(
             style = terminalStyle
         )
 
-        // Crisp selectable layer
         SelectionContainer {
             Text(
                 text = displayText,
@@ -246,7 +237,7 @@ fun BootScreen(
             )
         }
 
-        ScanlinesOverlay(
+        ScanlineOverlay(
             modifier = Modifier
                 .fillMaxSize()
                 .alpha(0.12f)
@@ -255,16 +246,16 @@ fun BootScreen(
 }
 
 @Composable
-private fun ScanlinesOverlay(modifier: Modifier = Modifier) {
-    val lineColor = Color(0xFF000000)
+private fun ScanlineOverlay(modifier: Modifier = Modifier) {
+    val lineColor = EveColors.Scanline
     Box(
         modifier = modifier.background(
             Brush.verticalGradient(
                 colorStops = arrayOf(
-                    0.00f to Color.Transparent,
+                    0.00f to EveColors.Transparent,
                     0.02f to lineColor,
-                    0.04f to Color.Transparent,
-                    0.10f to Color.Transparent
+                    0.04f to EveColors.Transparent,
+                    0.10f to EveColors.Transparent
                 )
             )
         )

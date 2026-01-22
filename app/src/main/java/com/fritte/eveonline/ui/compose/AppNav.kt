@@ -1,19 +1,17 @@
 package com.fritte.eveonline.ui.compose
 
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.*
+import com.fritte.eveonline.theme.EveColors
 import com.fritte.eveonline.ui.states.AuthState
 import com.fritte.eveonline.ui.viewmodel.AuthViewModel
 import com.fritte.eveonline.ui.states.StartupState
@@ -30,39 +28,46 @@ fun AppNav() {
     val authState by authVm.state.collectAsStateWithLifecycle()
     val dataReady by bootVm.dataReady.collectAsStateWithLifecycle()
     val terminalDone by bootVm.terminalDone.collectAsStateWithLifecycle()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val route = navBackStackEntry?.destination?.route
 
-    Scaffold(
-        topBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val route = navBackStackEntry?.destination?.route
-            if (route == "main") {
-                TopAppBar(
-                    modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
-                    title = { Text("Eve Online Copilot") },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.primary,
+    TerminalBackground {
+        Scaffold(
+            containerColor = EveColors.Transparent,
+            contentColor = EveColors.OnBg,
+            topBar = {
+
+                when (route) {
+                    "main" -> {
+                        TerminalTopBar(
+                            modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
+                            title = "EVE Online Copilot",
+                            subtitle = "Stay Neutral."
+                        )
+                    }
+                    else -> {
+                        // nothing yet
+                    }
+                }
+            }
+        ) { innerPadding ->
+            NavHost(
+                navController = navController,
+                startDestination = "boot",
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                composable("boot") {
+                    BootScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        bootVm,
                     )
-                )
-            }
-        }
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = "boot",
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable("boot") {
-                BootScreen(
-                    modifier = Modifier.padding(innerPadding),
-                    bootVm,
-                )
-            }
-            composable("login") {
-                LoginScreen(authVm)
-            }
-            composable("main") {
-                MainScreen()
+                }
+                composable("login") {
+                    LoginScreen(authVm)
+                }
+                composable("main") {
+                    MainScreen()
+                }
             }
         }
     }
@@ -71,13 +76,7 @@ fun AppNav() {
         val current = navController.currentDestination?.route
 
         if (!dataReady || !terminalDone) return@LaunchedEffect
-
-        when (bootState) {
-            is StartupState.Error -> {
-                return@LaunchedEffect
-            }
-            else -> {}
-        }
+        if (bootState is StartupState.Error) return@LaunchedEffect
 
         when (authState) {
             AuthState.LoggedIn -> if (current != "main") {

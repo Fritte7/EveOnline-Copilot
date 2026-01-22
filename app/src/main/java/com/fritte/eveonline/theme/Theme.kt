@@ -1,42 +1,35 @@
 package com.fritte.eveonline.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
-    background = Background80,
-    surface = Surface80,
-    surfaceVariant = SurfaceVariant80,
-)
+private val EveTerminalScheme = darkColorScheme(
+    primary = EveColors.Primary,
+    onPrimary = EveColors.OnPrimary,
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
-    background = Background40,
-    surface = Surface40,
-    surfaceVariant = SurfaceVariant40,
+    background = EveColors.Bg,
+    onBackground = EveColors.OnBg,
+
+    surface = EveColors.Surface,
+    onSurface = EveColors.OnSurface,
+
+    surfaceVariant = EveColors.SurfaceVariant,
+    onSurfaceVariant = EveColors.OnSurface,
+
+    outline = EveColors.Outline,
+
+    error = EveColors.Error,
+    onError = Color.Black,
 )
 
 @Composable
 fun EveOnlineCopilotTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) {
-        DarkColorScheme
-    } else {
-        LightColorScheme
-    }
-
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = EveTerminalScheme,
         typography = Typography,
         content = content
     )
