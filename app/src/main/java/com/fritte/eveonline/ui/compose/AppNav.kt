@@ -28,6 +28,8 @@ fun AppNav() {
     val authVm: AuthViewModel = koinViewModel()
     val bootState by bootVm.state.collectAsStateWithLifecycle()
     val authState by authVm.state.collectAsStateWithLifecycle()
+    val dataReady by bootVm.dataReady.collectAsStateWithLifecycle()
+    val terminalDone by bootVm.terminalDone.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -68,18 +70,14 @@ fun AppNav() {
     LaunchedEffect(bootState, authState) {
         val current = navController.currentDestination?.route
 
-        when (bootState) {
-            StartupState.Booting -> Unit
-            StartupState.ImportingStaticData -> Unit
-            StartupState.CheckingAuth -> Unit
-            StartupState.Ready -> Unit
-            StartupState.TerminalDone -> {
-                bootVm.ready()
-            }
-            is StartupState.Error -> return@LaunchedEffect //TODO catch this
-        }
+        if (!dataReady || !terminalDone) return@LaunchedEffect
 
-        if (bootState != StartupState.Ready) return@LaunchedEffect
+        when (bootState) {
+            is StartupState.Error -> {
+                return@LaunchedEffect
+            }
+            else -> {}
+        }
 
         when (authState) {
             AuthState.LoggedIn -> if (current != "main") {

@@ -17,8 +17,8 @@ interface SystemDao {
     @Query("SELECT * FROM system WHERE systemId = :id")
     suspend fun getSystemById(id: Long): SystemEntity?
 
-    @Query("SELECT * FROM system WHERE name = :name")
-    suspend fun getSystemByName(name: String): SystemEntity?
+    @Query("SELECT * FROM system WHERE name = :key OR alias = :key LIMIT 1")
+    suspend fun getSystemByName(key: String): SystemEntity?
 
     @Query("SELECT * FROM system WHERE constellationId = :constellationId")
     suspend fun getSystemsByConstellation(constellationId: Long): List<SystemEntity>

@@ -19,7 +19,7 @@ class AuthViewModel(
     val state: StateFlow<AuthState> =
         tokenStore.hasSessionFlow
             .map { has -> if (has) AuthState.LoggedIn else AuthState.LoggedOut }
-            .stateIn(viewModelScope, SharingStarted.Companion.WhileSubscribed(5_000), AuthState.Loading)
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), AuthState.Loading)
 
     fun startLogin(): Uri {
         val (uri, _) = authManager.startLogin()

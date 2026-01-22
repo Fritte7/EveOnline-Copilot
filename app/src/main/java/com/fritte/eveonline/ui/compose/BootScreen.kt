@@ -42,10 +42,12 @@ fun BootScreen(
     vm: StartupViewModel
 ) {
     val state by vm.state.collectAsState()
-    val initLine     = "Initialization "
-    val staticData   = "Importing static data ........... OK"
-    val checkingAuth = "Checking authentication ......... OK"
-    val endLine      = "\n\n\nLaunching interface ................ "
+
+    val initLine          = "Initialization "
+    val staticData        = "Importing static data ........... OK"
+    val visitedSystemData = "Checking visited system ......... OK"
+    val checkingAuth      = "Checking authentication ......... OK"
+    val endLine    = "\n\n\nLaunching interface ................ "
     val priorityLines = remember { mutableStateListOf<String>() }
     val scriptLines   = remember {
         listOf(
@@ -180,6 +182,8 @@ fun BootScreen(
         when (state) {
             StartupState.ImportingStaticData ->
                 priorityLines.add(staticData)
+            StartupState.ImportingVisitedSystemData ->
+                priorityLines.add(visitedSystemData)
             StartupState.CheckingAuth ->
                 priorityLines.add(checkingAuth)
             is StartupState.Error ->

@@ -1,12 +1,12 @@
 package com.fritte.eveonline.data.model.auth
 
 import android.net.Uri
-import android.util.Base64
 import com.fritte.eveonline.data.network.api.EVESsoAPI
 import com.fritte.eveonline.domain.repository.DataStoreTokenRepository
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import java.util.Base64
 
 class EveAuthManager(
     private val cfg: EveAuthConfig,
@@ -56,15 +56,12 @@ class EveAuthManager(
         return true
     }
 
-    fun parseJwtClaims(token: String, moshi: Moshi): EveJwtClaims {
+    private fun parseJwtClaims(token: String, moshi: Moshi): EveJwtClaims {
         val parts = token.split(".")
         require(parts.size >= 2) { "Invalid JWT" }
 
         val payloadJson = String(
-            Base64.decode(
-                parts[1],
-                Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING
-            ),
+            Base64.getUrlDecoder().decode(parts[1]),
             Charsets.UTF_8
         )
 
@@ -73,7 +70,7 @@ class EveAuthManager(
             ?: error("Failed to parse JWT claims")
     }
 
-    fun characterIdFromSub(sub: String): Long {
+    private fun characterIdFromSub(sub: String): Long {
         // sub = "CHARACTER:EVE:123456789"
         return sub.substringAfterLast(":").toLong()
     }
