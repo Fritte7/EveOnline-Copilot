@@ -35,7 +35,7 @@ fun AppNav() {
         Scaffold(
             containerColor = EveColors.Transparent,
             contentColor = EveColors.OnBg,
-            topBar = {
+            /*topBar = {
 
                 when (route) {
                     "main" -> {
@@ -49,7 +49,7 @@ fun AppNav() {
                         // nothing yet
                     }
                 }
-            }
+            }*/
         ) { innerPadding ->
             NavHost(
                 navController = navController,

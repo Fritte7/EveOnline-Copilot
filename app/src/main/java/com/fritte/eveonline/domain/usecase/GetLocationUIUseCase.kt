@@ -72,7 +72,7 @@ class GetLocationUIUseCase(
             )
         } else {
             LocationUI(
-                title = "In k-space",
+                title = "K-space",
                 subtitle = if (stale) "Last known location" else null,
                 isStale = stale,
             )

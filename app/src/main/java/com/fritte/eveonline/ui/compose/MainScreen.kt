@@ -17,12 +17,14 @@ fun MainScreen(
     val onlineState = locationVm.onlineState.collectAsState().value
     val locationUiState = locationVm.locationUiState.collectAsState().value
 
+    val isOnline = (onlineState as? UiState.Success)?.data?.online == true
+
     DisposableEffect(Unit) {
         onDispose { locationVm.stopPolling() }
     }
 
     TerminalScaffold(
-        title = characterName?.let { "o7 $it" } ?: "o7 Capsuleer"
+        title = characterName?.let { "Captain $it" } ?: "Captain Capsuleer"
     ) {
         TerminalPanel {
             TerminalLine("Handshake: CONCORD relay ...... ${onlineValue(onlineState)}",
@@ -34,8 +36,7 @@ fun MainScreen(
                 UiState.Loading -> TerminalLine("Checking online status …", color = statusColor("WARN"))
                 is UiState.Error -> TerminalLine("Online status error: ${onlineState.message}", color = statusColor("ERROR"))
                 is UiState.Success -> {
-                    val online = onlineState.data.online
-                    TerminalRow("Pilot status", if (online) "ONLINE" else "OFFLINE", valueColor = statusColor(if (online) "ONLINE" else "OFFLINE"))
+                    TerminalRow("Pilot status", if (isOnline) "ONLINE" else "OFFLINE", valueColor = statusColor(if (isOnline) "ONLINE" else "OFFLINE"))
                 }
             }
         }
@@ -43,8 +44,6 @@ fun MainScreen(
         Spacer(Modifier.height(12.dp))
 
         TerminalPanel {
-            val isOnline = (onlineState as? UiState.Success)?.data?.online == true
-
             TerminalRow(
                 label = "Location polling",
                 value = if (isOnline) "ACTIVE" else "PAUSED",
@@ -53,7 +52,7 @@ fun MainScreen(
 
             when (locationUiState) {
                 UiState.Idle -> {
-                    TerminalLine(if (isOnline) "No location yet." else "Offline — no last known location yet.", color = statusColor("PAUSED"))
+                    //TerminalLine(if (isOnline) "No location yet." else "Offline — no last known location yet.", color = statusColor("PAUSED"))
                 }
 
                 UiState.Loading -> {
@@ -65,17 +64,17 @@ fun MainScreen(
 
                 is UiState.Success -> {
                     val ui = locationUiState.data
-                    TerminalRow("System", ui.title, valueColor = statusColor("OK"))
-                    ui.subtitle?.let { TerminalRow("Detail", it, valueColor = statusColor("OK")) }
+                    TerminalRow("Space", ui.title, valueColor = statusColor("OK"))
 
-                    if (!isOnline) {
-                        TerminalLine("Offline — location polling paused.", color = statusColor("PAUSED"))
-                    }
+                    TerminalRow("Detail", "", valueColor = statusColor("OK"))
+                    Spacer(Modifier.height(12.dp))
+                    TerminalRow("System", ui.systemName ?: "unknown", valueColor = statusColor("OK"))
+                    TerminalRow("Class", ui.systemClass ?: "", valueColor = statusColor("OK"))
+                    TerminalRow("Effect", ui.systemEffect ?: "", valueColor = statusColor("OK"))
                 }
 
                 is UiState.Error -> {
                     TerminalLine("Location error: ${locationUiState.message}", color = statusColor("ERROR"))
-                    if (!isOnline) TerminalLine("Offline — location polling paused.", color = statusColor("PAUSED"))
                 }
             }
         }

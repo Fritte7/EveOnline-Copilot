@@ -34,21 +34,13 @@ fun TerminalScaffold(
 
 @Composable
 fun TerminalHeader(title: String) {
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        Text(
-            text = title,
-            color = EveColors.PrimaryVariant,
-            fontFamily = FontFamily.Monospace,
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.titleLarge
-        )
-        Text(
-            text = "Initializing interface …",
-            color = EveColors.Outline,
-            fontFamily = FontFamily.Monospace,
-            style = MaterialTheme.typography.bodyMedium
-        )
-    }
+    Text(
+        text = title,
+        color = EveColors.PrimaryVariant,
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Bold,
+        style = MaterialTheme.typography.titleLarge
+    )
 }
 
 @Composable
@@ -95,7 +87,7 @@ fun TerminalRow(
         // dot fill to the right - not perfect typography, but gives the vibe
         Box(modifier = Modifier.weight(1f)) {
             Text(
-                text = ".".repeat(dotsMin).repeat(6), // cheap filler
+                text = ".".repeat(dotsMin).repeat(6),
                 color = EveColors.Warn.copy(alpha = 0.55f),
                 fontFamily = FontFamily.Monospace,
                 maxLines = 1,
