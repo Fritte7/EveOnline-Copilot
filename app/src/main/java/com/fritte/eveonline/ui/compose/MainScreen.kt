@@ -27,10 +27,6 @@ fun MainScreen(
         title = characterName?.let { "Captain $it" } ?: "Captain Capsuleer"
     ) {
         TerminalPanel {
-            TerminalLine("Handshake: CONCORD relay ...... ${onlineValue(onlineState)}",
-                color = statusColor(onlineValue(onlineState))
-            )
-
             when (onlineState) {
                 UiState.Idle -> TerminalLine("Awaiting authentication / character selection …", color = statusColor("PAUSED"))
                 UiState.Loading -> TerminalLine("Checking online status …", color = statusColor("WARN"))

@@ -5,8 +5,6 @@ import com.fritte.eveonline.data.network.BearerTokenInterceptor
 import com.fritte.eveonline.data.network.api.EVEEsiAPI
 import com.fritte.eveonline.data.network.api.EVESsoAPI
 import com.fritte.eveonline.data.network.EveTokenAuthenticator
-import com.fritte.eveonline.data.repo.DataStoreTokenRepositoryImpl
-import com.fritte.eveonline.domain.repository.DataStoreTokenRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -14,7 +12,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
-import org.koin.android.ext.koin.androidContext
 
 val networkModule = module {
 
@@ -24,11 +21,6 @@ val networkModule = module {
             .add(KotlinJsonAdapterFactory())
             .build()
     }
-
-    single<DataStoreTokenRepository> {
-        DataStoreTokenRepositoryImpl(androidContext())
-    }
-
     single(named("ssoRetrofit")) {
         Retrofit.Builder()
             .baseUrl(BuildConfig.EVE_LOGIN_URL)
@@ -46,7 +38,6 @@ val networkModule = module {
             .authenticator(EveTokenAuthenticator(get(), get(), clientId))
             .build()
     }
-
     single(named("esiRetrofit")) {
         Retrofit.Builder()
             .baseUrl(BuildConfig.EVE_ESI_API_URL)
