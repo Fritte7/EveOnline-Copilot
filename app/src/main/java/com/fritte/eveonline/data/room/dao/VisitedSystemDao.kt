@@ -18,8 +18,11 @@ interface VisitedSystemDao {
     @Query("SELECT COUNT(*) FROM visited_system WHERE systemId = :systemId")
     suspend fun getVisitCount(systemId: Long): Int
 
-    @Query("SELECT MAX(visitedAt) FROM visited_system WHERE systemId = :systemId")
-    suspend fun getLastVisited(systemId: Long): Long?
+    @Query("SELECT systemId FROM visited_system ORDER BY visitedAt DESC LIMIT 1")
+    suspend fun getLastVisited(): VisitedSystemEntity?
+
+    @Query("SELECT * FROM visited_system WHERE systemId = :systemId ORDER BY visitedAt DESC LIMIT 1")
+    suspend fun getLastVisited(systemId: Long): VisitedSystemEntity?
 
     @Query(
         "SELECT v.visitedAt AS visitedAt, " +

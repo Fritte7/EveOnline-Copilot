@@ -17,7 +17,7 @@ class RecordSystemVisitUseCase(
 
         // 2) same as last => skip
         val last = visitedRepo.getLastVisit()
-        if (last.systemId == solarSystemId) return
+        if (last?.systemId == solarSystemId) return
 
         val clock = Clock.System
         val now = clock.now().toEpochMilliseconds()

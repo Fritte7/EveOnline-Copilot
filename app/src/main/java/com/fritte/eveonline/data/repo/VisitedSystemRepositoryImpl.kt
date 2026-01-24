@@ -8,15 +8,20 @@ class VisitedSystemRepositoryImpl(
     private val db: AppDatabase,
 ): VisitedSystemRepository {
 
-    override suspend fun getLastVisit(): VisitedSystemEntity {
-        TODO("Not yet implemented")
+    override suspend fun getLastVisit(): VisitedSystemEntity? {
+        return db.visitedSystemDao().getLastVisited()
     }
 
     override suspend fun getLastVisitForSystem(systemId: Long): VisitedSystemEntity? {
-        TODO("Not yet implemented")
+        return db.visitedSystemDao().getLastVisited(systemId)
     }
 
     override suspend fun insertVisit(solarSystemId: Long, visitedAt: Long) {
-        TODO("Not yet implemented")
+        db.visitedSystemDao().insertVisit(
+            VisitedSystemEntity(
+                systemId = solarSystemId,
+                visitedAt = visitedAt
+            )
+        )
     }
 }

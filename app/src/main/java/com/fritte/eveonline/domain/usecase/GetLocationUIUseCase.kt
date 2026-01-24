@@ -49,10 +49,12 @@ class GetLocationUIUseCase(
             )
         }
 
-        // If Room contains the system => it's a J-space system we know about
-        val sys = systemDao.getSystemById(loc.solar_system_id)
-        if (sys != null) {
-            recordSystemVisitUseCase(sys.systemId)
+        // If isOnline and Room contains the system => it's a J-space we record the visit
+        if (isOnline) {
+            val sys = systemDao.getSystemById(loc.solar_system_id)
+            if (sys != null) {
+                recordSystemVisitUseCase(sys.systemId)
+            }
         }
 
         return@withContext if (sys != null) {
