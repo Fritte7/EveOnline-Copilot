@@ -9,7 +9,8 @@ import kotlinx.coroutines.withContext
 
 class GetLocationUIUseCase(
     private val esiRepo: LocationRepository,
-    private val systemDao: SystemDao
+    private val systemDao: SystemDao,
+    private val recordSystemVisitUseCase: RecordSystemVisitUseCase
 ) {
 
     suspend operator fun invoke(
@@ -50,6 +51,10 @@ class GetLocationUIUseCase(
 
         // If Room contains the system => it's a J-space system we know about
         val sys = systemDao.getSystemById(loc.solar_system_id)
+        if (sys != null) {
+            recordSystemVisitUseCase(sys.systemId)
+        }
+
         return@withContext if (sys != null) {
             val name = sys.name
             val whClass = sys.wormholeClass
