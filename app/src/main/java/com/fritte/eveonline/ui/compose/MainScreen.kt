@@ -74,5 +74,17 @@ fun MainScreen(
                 }
             }
         }
+
+        Spacer(Modifier.height(12.dp))
+
+        if (locationUiState is UiState.Success && locationUiState.data.isNewRecorded) {
+            TerminalPanel {
+                TerminalRow(
+                    label = "New system discovered",
+                    value = "RECORDED",
+                    valueColor = statusColor("WARN")
+                )
+            }
+        }
     }
 }

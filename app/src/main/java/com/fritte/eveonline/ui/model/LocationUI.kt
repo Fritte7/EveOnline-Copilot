@@ -7,4 +7,5 @@ data class LocationUI(
     val systemClass: String? = null,
     val systemEffect: String? = null,
     val isStale: Boolean = false,
+    val isNewRecorded: Boolean = false,
 )

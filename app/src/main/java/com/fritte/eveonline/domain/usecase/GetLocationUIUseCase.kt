@@ -51,9 +51,7 @@ class GetLocationUIUseCase(
 
         // If isOnline and Room contains the system => it's a J-space we record the visit
         val sys = systemDao.getSystemById(loc.solar_system_id)
-        if (isOnline && sys != null) {
-            recordSystemVisitUseCase(sys.systemId)
-        }
+        val isSystemRecorded = if (isOnline && sys != null) { recordSystemVisitUseCase(sys.systemId) } else false
 
         return@withContext if (sys != null) {
             val name = sys.name
@@ -73,7 +71,8 @@ class GetLocationUIUseCase(
                 systemName = name,
                 systemClass = whClass,
                 systemEffect = effect,
-                isStale = stale
+                isNewRecorded = isSystemRecorded,
+                isStale = stale,
             )
         } else {
             LocationUI(
