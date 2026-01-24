@@ -112,7 +112,7 @@ fun TerminalLine(text: String, color: Color = EveColors.PrimaryVariant) {
         text = text,
         color = color,
         fontFamily = FontFamily.Monospace,
-        style = MaterialTheme.typography.bodyMedium
+        fontWeight = FontWeight.SemiBold
     )
 }
 

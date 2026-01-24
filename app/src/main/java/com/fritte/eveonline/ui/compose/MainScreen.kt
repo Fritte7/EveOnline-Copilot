@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.fritte.eveonline.data.model.esi.CharacterLocationOnline
 import com.fritte.eveonline.ui.states.UiState
 import com.fritte.eveonline.ui.viewmodel.LocationViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -28,9 +27,10 @@ fun MainScreen(
     ) {
         TerminalPanel {
             when (onlineState) {
-                UiState.Idle -> TerminalLine("Awaiting authentication / character selection …", color = statusColor("PAUSED"))
-                UiState.Loading -> TerminalLine("Checking online status …", color = statusColor("WARN"))
-                is UiState.Error -> TerminalLine("Online status error: ${onlineState.message}", color = statusColor("ERROR"))
+                UiState.Idle ->     TerminalLine("Awaiting authentication / character selection …", color = statusColor("PAUSED"))
+                UiState.Loading ->  TerminalRow("Pilot status", "CHECKING", valueColor = statusColor("WARN"))
+                //is UiState.Error -> TerminalLine("Online status error: ${onlineState.message}", color = statusColor("ERROR"))
+                is UiState.Error -> TerminalRow("Pilot status", "ERROR: ${onlineState.message}", valueColor = statusColor("ERROR"))
                 is UiState.Success -> {
                     TerminalRow("Pilot status", if (isOnline) "ONLINE" else "OFFLINE", valueColor = statusColor(if (isOnline) "ONLINE" else "OFFLINE"))
                 }
@@ -61,9 +61,9 @@ fun MainScreen(
                 is UiState.Success -> {
                     val ui = locationUiState.data
                     TerminalRow("Space", ui.title, valueColor = statusColor("OK"))
-
-                    TerminalRow("Detail", "", valueColor = statusColor("OK"))
                     Spacer(Modifier.height(12.dp))
+
+                    TerminalLine("Location:")
                     TerminalRow("System", ui.systemName ?: "unknown", valueColor = statusColor("OK"))
                     TerminalRow("Class", ui.systemClass ?: "", valueColor = statusColor("OK"))
                     TerminalRow("Effect", ui.systemEffect ?: "", valueColor = statusColor("OK"))
@@ -75,11 +75,4 @@ fun MainScreen(
             }
         }
     }
-}
-
-private fun onlineValue(state: UiState<CharacterLocationOnline>): String = when (state) {
-    UiState.Idle -> "PAUSED"
-    UiState.Loading -> "…"
-    is UiState.Success -> if (state.data.online) "OK" else "OFFLINE"
-    is UiState.Error -> "FAIL"
 }
