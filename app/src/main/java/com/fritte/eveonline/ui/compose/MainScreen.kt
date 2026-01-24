@@ -1,11 +1,19 @@
 package com.fritte.eveonline.ui.compose
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import com.fritte.eveonline.ui.states.UiState
 import com.fritte.eveonline.ui.viewmodel.LocationViewModel
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -17,9 +25,31 @@ fun MainScreen(
     val locationUiState = locationVm.locationUiState.collectAsState().value
 
     val isOnline = (onlineState as? UiState.Success)?.data?.online == true
+    val showRecorded = (locationUiState as? UiState.Success)?.data?.isNewRecorded == true
+
+    var blinking by remember { mutableStateOf(false) }
+    val durationBlink = 350
+    val alpha by animateFloatAsState(
+        targetValue = if (blinking) 0.2f else 1f,
+        animationSpec = tween(
+            durationMillis = durationBlink,
+            easing = LinearEasing
+        ),
+        label = "blinkAlpha"
+    )
 
     DisposableEffect(Unit) {
         onDispose { locationVm.stopPolling() }
+    }
+
+    LaunchedEffect(showRecorded) {
+        if (!showRecorded) return@LaunchedEffect
+        repeat(3) {
+            blinking = true
+            delay(durationBlink.toLong())
+            blinking = false
+            delay(durationBlink.toLong())
+        }
     }
 
     TerminalScaffold(
@@ -77,8 +107,12 @@ fun MainScreen(
 
         Spacer(Modifier.height(12.dp))
 
-        if (locationUiState is UiState.Success && locationUiState.data.isNewRecorded) {
-            TerminalPanel {
+        AnimatedVisibility(
+            visible = showRecorded,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            TerminalPanel(modifier = Modifier.alpha(alpha)) {
                 TerminalRow(
                     label = "New system discovered",
                     value = "RECORDED",
