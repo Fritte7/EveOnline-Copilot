@@ -12,6 +12,7 @@ import com.fritte.eveonline.data.room.entities.RegionEntity
 import com.fritte.eveonline.data.room.entities.SystemEntity
 import com.fritte.eveonline.data.room.entities.VisitedSystemEntity
 import com.fritte.eveonline.data.room.converters.Converters
+import com.fritte.eveonline.data.room.dao.WatchedSystemDao
 
 @Database(
     entities = [
@@ -30,4 +31,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun regionDao(): RegionDao
     abstract fun constellationDao(): ConstellationDao
     abstract fun visitedSystemDao(): VisitedSystemDao
+    abstract fun watchedSystemDao(): WatchedSystemDao
 }
