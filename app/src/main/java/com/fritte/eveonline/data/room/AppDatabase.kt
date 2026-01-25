@@ -13,13 +13,15 @@ import com.fritte.eveonline.data.room.entities.SystemEntity
 import com.fritte.eveonline.data.room.entities.VisitedSystemEntity
 import com.fritte.eveonline.data.room.converters.Converters
 import com.fritte.eveonline.data.room.dao.WatchedSystemDao
+import com.fritte.eveonline.data.room.entities.WatchedSystemEntity
 
 @Database(
     entities = [
         SystemEntity::class,
         RegionEntity::class,
         ConstellationEntity::class,
-        VisitedSystemEntity::class
+        VisitedSystemEntity::class,
+        WatchedSystemEntity::class,
     ],
     version = 1
 )
