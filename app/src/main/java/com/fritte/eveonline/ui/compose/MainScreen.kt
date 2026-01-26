@@ -52,17 +52,15 @@ fun MainScreen(
         }
     }
 
-    TerminalScaffold(
-        title = characterName?.let { "Captain $it" } ?: "Captain Capsuleer"
-    ) {
+    TerminalScaffold {
         TerminalPanel {
+            TerminalRow("Captain", characterName ?: "Capsuleer", statusColor("OK"))
             when (onlineState) {
-                UiState.Idle ->     TerminalLine("Awaiting authentication / character selection …", color = statusColor("PAUSED"))
-                UiState.Loading ->  TerminalRow("Pilot status", "CHECKING", valueColor = statusColor("WARN"))
-                //is UiState.Error -> TerminalLine("Online status error: ${onlineState.message}", color = statusColor("ERROR"))
-                is UiState.Error -> TerminalRow("Pilot status", "ERROR: ${onlineState.message}", valueColor = statusColor("ERROR"))
+                UiState.Idle -> {}
+                UiState.Loading ->  TerminalRow("Status", "CHECKING", valueColor = statusColor("WARN"))
+                is UiState.Error -> TerminalRow("Status", "ERROR: ${onlineState.message}", valueColor = statusColor("ERROR"))
                 is UiState.Success -> {
-                    TerminalRow("Pilot status", if (isOnline) "ONLINE" else "OFFLINE", valueColor = statusColor(if (isOnline) "ONLINE" else "OFFLINE"))
+                    TerminalRow("Status", if (isOnline) "ONLINE" else "OFFLINE", valueColor = statusColor(if (isOnline) "ONLINE" else "OFFLINE"))
                 }
             }
         }

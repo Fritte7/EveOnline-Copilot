@@ -2,7 +2,6 @@ package com.fritte.eveonline.ui.compose
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,7 +16,6 @@ import com.fritte.eveonline.theme.EveColors
 
 @Composable
 fun TerminalScaffold(
-    title: String,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
@@ -26,21 +24,8 @@ fun TerminalScaffold(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        TerminalHeader(title = title)
-        Spacer(Modifier.height(12.dp))
         content()
     }
-}
-
-@Composable
-fun TerminalHeader(title: String) {
-    Text(
-        text = title,
-        color = EveColors.PrimaryVariant,
-        fontFamily = FontFamily.Monospace,
-        fontWeight = FontWeight.Bold,
-        style = MaterialTheme.typography.titleLarge
-    )
 }
 
 @Composable

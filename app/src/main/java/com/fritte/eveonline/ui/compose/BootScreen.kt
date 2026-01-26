@@ -6,7 +6,6 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -237,27 +235,5 @@ fun BootScreen(
             )
         }
 
-        ScanlineOverlay(
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.12f)
-        )
     }
-}
-
-@Composable
-private fun ScanlineOverlay(modifier: Modifier = Modifier) {
-    val lineColor = EveColors.Scanline
-    Box(
-        modifier = modifier.background(
-            Brush.verticalGradient(
-                colorStops = arrayOf(
-                    0.00f to EveColors.Transparent,
-                    0.02f to lineColor,
-                    0.04f to EveColors.Transparent,
-                    0.10f to EveColors.Transparent
-                )
-            )
-        )
-    )
 }
