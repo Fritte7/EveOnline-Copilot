@@ -89,12 +89,16 @@ fun MainScreen(
                 is UiState.Success -> {
                     val ui = locationUiState.data
                     TerminalRow("Space", ui.title, valueColor = statusColor("OK"))
-                    Spacer(Modifier.height(12.dp))
 
-                    TerminalLine("Location:")
-                    TerminalRow("System", ui.systemName ?: "unknown", valueColor = statusColor("OK"))
-                    TerminalRow("Class", ui.systemClass ?: "", valueColor = statusColor("OK"))
-                    TerminalRow("Effect", ui.systemEffect ?: "", valueColor = statusColor("OK"))
+                    if (ui.title.isNotEmpty() && ui.title == "J-space") {
+                    Spacer(Modifier.height(12.dp))
+                        TerminalLine("Location:")
+                        TerminalRow("System", ui.systemName ?: "unknown", valueColor = statusColor("OK"))
+                        TerminalRow("Class", ui.systemClass ?: "unknown", valueColor = statusColor("OK"))
+                        if (ui.systemEffect?.isNotEmpty() == true) {
+                            TerminalRow("Effect", ui.systemEffect, valueColor = statusColor("OK"))
+                        }
+                    }
                 }
 
                 is UiState.Error -> {

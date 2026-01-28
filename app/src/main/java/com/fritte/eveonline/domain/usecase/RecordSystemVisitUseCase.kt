@@ -4,6 +4,7 @@ import com.fritte.eveonline.domain.repository.SystemRepository
 import com.fritte.eveonline.domain.repository.VisitedSystemRepository
 import kotlin.time.Clock
 
+/* Record a system visit and return if it's a new one */
 class RecordSystemVisitUseCase(
     private val visitedRepo: VisitedSystemRepository,
     private val systemRepo: SystemRepository,
@@ -27,6 +28,7 @@ class RecordSystemVisitUseCase(
         if (lastVisitThisSystem != null && now - lastVisitThisSystem.visitedAt < minIntervalMs) return false
 
         visitedRepo.insertVisit(solarSystemId, now)
-        return true
+
+        return lastVisitThisSystem == null
     }
 }
