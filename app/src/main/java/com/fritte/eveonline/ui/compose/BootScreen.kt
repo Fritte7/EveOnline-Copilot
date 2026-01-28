@@ -1,38 +1,27 @@
 package com.fritte.eveonline.ui.compose
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fritte.eveonline.theme.EveColors
+import com.fritte.eveonline.ui.model.BootItem
+import com.fritte.eveonline.ui.model.toChunk
 import com.fritte.eveonline.ui.states.StartupState
 import com.fritte.eveonline.ui.viewmodel.StartupViewModel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlin.random.Random
 
 @Composable
 fun BootScreen(
@@ -41,183 +30,135 @@ fun BootScreen(
 ) {
     val state by vm.state.collectAsState()
 
-    val initLine          = "Initialization "
-    val staticData        = "Importing static data ........... OK"
-    val visitedSystemData = "Checking visited system ......... OK"
-    val checkingAuth      = "Checking authentication ......... OK"
-    val endLine    = "\n\n\nLaunching interface ................ "
-    val priorityLines = remember { mutableStateListOf<String>() }
-    val scriptLines   = remember {
-        listOf(
-            "Voyager waking up ... ",
-            "Copilot ...................... READY",
-            "Connection to Sisters of EVE ...... ",
-            "Connection established successfully!\n",
-        )
-    }
+    val priorityLines = remember { mutableStateListOf<BootItem>() }
     val scriptLinesRandom = remember {
         listOf(
-            "Turning lights ON ............... OK",
-            "Neural link stabilization ....... OK",
-            "Handshake: CONCORD relay ........ OK",
-            "Calibrating probe launcher ...... OK",
-            "Loading probes .................. OK",
-            "Starting scanner ................ OK",
-            "Initializing coffee injector .... OK",
-            "Caffeine reserves ......... CRITICAL",
-            "Gravimetric sensors online ...... OK",
-            "Cloaking device standby ......... OK",
-            "Covert ops protocols loaded ..... OK",
-            "Warp core integrity ......... STABLE",
-            "Loading Anoikis topology ........ OK",
-            "Cleaning sensors ................ OK",
-            "Decrypting bookmarks ............ OK",
-            "Injecting: \"Stay Neutral.\" ...... OK",
-            "Towel inventory ............ PRESENT",
+            BootItem.Row("Loading probes", "OK"),
+            BootItem.Row("Starting scanner", "OK"),
+            BootItem.Row("Cleaning sensors", "OK"),
+            BootItem.Row("Turning lights ON", "OK"),
+            BootItem.Row("Decrypting bookmarks", "OK"),
+            BootItem.Row("Loading Anoikis topology", "OK"),
+            BootItem.Row("Cloaking device standby", "OK"),
+            BootItem.Row("Handshake: CONCORD relay", "OK"),
+            BootItem.Row("Neural link stabilization", "OK"),
+            BootItem.Row("Calibrating probe launcher", "OK"),
+            BootItem.Row("Gravimetric sensors online", "OK"),
+            BootItem.Row("Initializing coffee injector", "OK"),
+            BootItem.Row("Covert ops protocols loaded", "OK"),
+            BootItem.Row("Injecting: \"Stay Neutral.\"", "OK"),
+            BootItem.Row("Warp core integrity", "STABLE"),
+            BootItem.Row("Caffeine reserves", "CRITICAL"),
+            BootItem.Row("Towel inventory","PRESENT"),
         )
     }
 
-    // Glitch config (sane defaults)
-    val glitchChars = listOf('#', '%', '@', '?', '*', '&')
-    val ghostChars = listOf('_', '░')
-    val glitchDelayMs = 45L
-    val ghostDelayMs = 60L
-    val glitchChance = 0.07f   // 7%
-    val ghostChance = 0.07f   // 7%
+    val typer = rememberTerminalTyper()
+    val displayText = typedTextWithCursor(typer.typedText, typer.isDone)
 
     val randomCount = 7
-    val charDelayMs = 18L
     val linePauseMs = 300L
     val initPauseMs = 1000L
 
-    var typedText by remember { mutableStateOf("") }
-    var isDone by remember { mutableStateOf(false) }
-
-    // Queue of chunks to type (single writer consumes this)
-    val queue = remember { Channel<String>(capacity = Channel.BUFFERED) }
-    // Cursor blink (we will append it INSIDE the text so it follows lines)
-    val infinite = rememberInfiniteTransition(label = "cursor")
-    val cursorAlpha by infinite.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(450, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "cursorAlpha"
-    )
-
-    suspend fun enqueueLinesWithPriority(
-        lines: List<String>,
-        isLastBlock: Boolean
-    ) {
-        lines.forEachIndexed { index, line ->
-            val isLastLine = isLastBlock && index == lines.lastIndex
-            val suffix = if (!isLastLine) "\n" else ""
-
-            queue.send(line + suffix)
-            delay(linePauseMs)
-
-            // Insert any status updates at safe boundaries
-            if (isLastBlock) {
-                while (priorityLines.isNotEmpty()) {
-                    val next = priorityLines.removeAt(0)
-                    queue.send(next + "\n")
-                    delay(linePauseMs)
-                }
-            }
-        }
-    }
-    suspend fun typeChunk(chunk: String) {
-        for (ch in chunk) {
-            if (Random.nextFloat() < ghostChance) {
-                typedText += ghostChars.random()
-                delay(ghostDelayMs)
-                typedText = typedText.dropLast(1)
-            }
-
-            typedText += ch
-            delay(charDelayMs)
-
-            if (Random.nextFloat() < glitchChance && ch != '\n' && ch != ' ') {
-                val correctChar = typedText.last()
-                val glitchChar = glitchChars.random()
-                typedText = typedText.dropLast(1) + glitchChar
-                delay(glitchDelayMs)
-                typedText = typedText.dropLast(1) + correctChar
-            }
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        queue.send(initLine)
-        delay(initPauseMs)
-        queue.send(".")
-        delay(initPauseMs / 2)
-        queue.send(".")
-        delay(initPauseMs / 5)
-        queue.send(".\n\n\n")
-        vm.boot()
-
-        enqueueLinesWithPriority(
-            lines = scriptLines,
-            isLastBlock = false
-        )
-        val randomLines = scriptLinesRandom.shuffled().take(randomCount)
-        queue.send("\n")
-        delay(linePauseMs)
-
-        enqueueLinesWithPriority(
-            lines = randomLines,
-            isLastBlock = true
-        )
-        // Run last line
-        queue.send(endLine)
-        delay(linePauseMs)
-        queue.close()
-    }
+    // State -> priority lines (use SHORT labels, not pre-dotted strings)
     LaunchedEffect(state) {
         when (state) {
             StartupState.ImportingStaticData ->
-                priorityLines.add(staticData)
+                priorityLines.add(BootItem.Row("Importing static data", "OK"))
             StartupState.ImportingVisitedSystemData ->
-                priorityLines.add(visitedSystemData)
+                priorityLines.add(BootItem.Row("Checking visited system", "OK"))
             StartupState.CheckingAuth ->
-                priorityLines.add(checkingAuth)
+                priorityLines.add(BootItem.Row("Checking authentication", "OK"))
             is StartupState.Error ->
-                priorityLines.add("ERROR: ${(state as StartupState.Error).message} !!!!")
+                priorityLines.add(BootItem.Row("ERROR", (state as StartupState.Error).message))
             else -> Unit
         }
     }
-    LaunchedEffect(Unit) {
-        for (chunk in queue) {
-            typeChunk(chunk)
-        }
-        isDone = true
-        vm.onTerminalDone()
-    }
-
-    // Build text with blinking cursor INSIDE it (so it follows newlines)
-    val cursorVisible = !isDone && cursorAlpha > 0.5f
-    val displayText = if (isDone) {
-        typedText
-    } else {
-        typedText + if (cursorVisible) "|" else " " // space avoids layout jitter
-    }
 
     // Terminal styling
-    val green = EveColors.Primary
     val terminalStyle = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontSize = 16.sp,
-        color = green
+        color = EveColors.Primary
     )
 
-    Box(
+    // ✅ THIS is where columns comes from
+    BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
             .padding(20.dp)
     ) {
+        val textMeasurer = rememberTextMeasurer()
+        val density = LocalDensity.current
+
+        // measure width of ONE monospace char (W is usually wide)
+        val charWidthPx = remember {
+            textMeasurer.measure("W", style = terminalStyle).size.width.coerceAtLeast(1)
+        }
+
+        val boxMaxWidth = this.maxWidth   // <— make it obvious for the IDE
+        val columns = remember(boxMaxWidth, charWidthPx) {
+            with(density) {
+                boxMaxWidth.toPx().toInt() / charWidthPx
+            }.coerceAtLeast(30)
+        }
+
+        suspend fun enqueueItems(items: List<BootItem>, isLastBlock: Boolean) {
+            items.forEachIndexed { index, item ->
+                val isLastLine = isLastBlock && index == items.lastIndex
+                val suffix = if (!isLastLine) "\n" else ""
+
+                typer.send(item.toChunk(columns) + suffix)
+                delay(linePauseMs)
+
+                if (isLastBlock) {
+                    while (priorityLines.isNotEmpty()) {
+                        val next = priorityLines.removeAt(0)
+                        typer.send(next.toChunk(columns) + "\n")
+                        delay(linePauseMs)
+                    }
+                }
+            }
+        }
+
+        LaunchedEffect(columns) {
+            typer.send("Initialization ")
+            delay(initPauseMs)
+            typer.send(".")
+            delay(initPauseMs / 2)
+            typer.send(".")
+            delay(initPauseMs / 5)
+            typer.send(".\n\n\n")
+
+            vm.boot()
+
+            val scriptItems = listOf(
+                BootItem.Line("Voyager waking up ..."),
+                BootItem.Row("Copilot", "READY"),
+                BootItem.Line("Connection to Sisters of EVE ..."),
+                BootItem.Line("Connection established successfully!")
+            )
+
+            enqueueItems(scriptItems, isLastBlock = false)
+
+            typer.send("\n")
+            delay(linePauseMs)
+
+            val randomItems = scriptLinesRandom
+                .shuffled()
+                .take(randomCount)
+
+            enqueueItems(randomItems, isLastBlock = true)
+
+            typer.send("\n\n\nLaunching interface ................ ")
+            typer.close()
+        }
+
+        LaunchedEffect(Unit) {
+            typer.run()
+            vm.onTerminalDone()
+        }
+
         Text(
             text = displayText,
             modifier = Modifier
@@ -234,6 +175,5 @@ fun BootScreen(
                 style = terminalStyle
             )
         }
-
     }
 }
