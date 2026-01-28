@@ -22,8 +22,10 @@ object EveColors {
     val Warn = Color(0xFFFFD54F)
     val Error = Color(0xFFFF6B6B)
 
-    // FX
-    val Scanline = Color(0xFF000000)
+    val PanelBg = Color(0xFF11151A)
+    val KeyBg = Bg.copy(alpha = 0.55f)
+    val KeyHighlight = Bg.copy(alpha = 0.75f)
+    val KeyEnter = Bg.copy(alpha = 0.85f)
 
     val Transparent = Color.Transparent
 }

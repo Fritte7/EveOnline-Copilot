@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.fritte.eveonline.data.room.entities.VisitedSystemEntity
 import com.fritte.eveonline.ui.model.VisitTimelineRow
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface VisitedSystemDao {
@@ -25,16 +26,16 @@ interface VisitedSystemDao {
     suspend fun getLastVisited(systemId: Long): VisitedSystemEntity?
 
     @Query(
-        "SELECT v.visitedAt AS visitedAt, " +
+        "SELECT v.id AS visitedId, " +
+        "v.visitedAt AS visitedAt, " +
         "v.systemId AS systemId, " +
-        "s.name AS systemName," +
-        "s.effect AS effect " +
+        "s.name AS systemName " +
         "FROM visited_system v " +
         "JOIN system s ON s.systemId = v.systemId " +
         "ORDER BY v.visitedAt DESC " +
-        "LIMIT :limit OFFSET :offset"
+        "LIMIT :limit"
     )
-    suspend fun getTimeline(limit: Int, offset: Int): List<VisitTimelineRow>
+    fun getTimeline(limit: Int): Flow<List<VisitTimelineRow>>
 
     @Query("SELECT COUNT(DISTINCT systemId) FROM visited_system")
     suspend fun getUniqueSystemsVisited(): Int
