@@ -18,15 +18,20 @@ import com.fritte.eveonline.ui.nav.Routes
 import com.fritte.eveonline.ui.states.AuthState
 import com.fritte.eveonline.ui.viewmodel.AuthViewModel
 import com.fritte.eveonline.ui.states.StartupState
+import com.fritte.eveonline.ui.viewmodel.PollingOrchestratorViewModel
 import com.fritte.eveonline.ui.viewmodel.StartupViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNav() {
+
     val navController = rememberNavController()
+
     val bootVm: StartupViewModel = koinViewModel()
     val authVm: AuthViewModel = koinViewModel()
+    val orchestrator: PollingOrchestratorViewModel = koinViewModel()
+
     val bootState by bootVm.state.collectAsStateWithLifecycle()
     val authState by authVm.state.collectAsStateWithLifecycle()
     val dataReady by bootVm.dataReady.collectAsStateWithLifecycle()

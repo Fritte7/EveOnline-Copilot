@@ -3,6 +3,7 @@ package com.fritte.eveonline.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fritte.eveonline.domain.repository.AnoikisImporterRepository
+import com.fritte.eveonline.domain.repository.StartupRepository
 import com.fritte.eveonline.domain.repository.VisitedSystemHistoryImporterRepository
 import com.fritte.eveonline.ui.states.StartupState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class StartupViewModel(
+    private val startupRepository: StartupRepository,
     private val anoikisImporterRepository: AnoikisImporterRepository,
     private val visitedSystemHistoryImporterRepository: VisitedSystemHistoryImporterRepository
 ) : ViewModel() {
@@ -24,6 +26,8 @@ class StartupViewModel(
     fun boot() {
         viewModelScope.launch {
             try {
+                startupRepository.setReady(false)
+
                 _state.value = StartupState.Booting
 
                 _state.value = StartupState.ImportingStaticData
@@ -32,11 +36,15 @@ class StartupViewModel(
 
                 _state.value = StartupState.ImportingVisitedSystemData
 
-                visitedSystemHistoryImporterRepository.import()
+                //visitedSystemHistoryImporterRepository.import()
 
                 _dataReady.value = true
+                startupRepository.setReady(true)
                 _state.value = StartupState.Ready
             } catch (t: Throwable) {
+                _dataReady.value = false
+                _terminalDone.value = false
+                startupRepository.setReady(false)
                 _state.value = StartupState.Error(t.message ?: "Startup failed")
             }
         }

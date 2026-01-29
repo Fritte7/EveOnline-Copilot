@@ -39,10 +39,6 @@ fun MainScreen(
         label = "blinkAlpha"
     )
 
-    DisposableEffect(Unit) {
-        onDispose { locationVm.stopPolling() }
-    }
-
     LaunchedEffect(showRecorded) {
         if (!showRecorded) return@LaunchedEffect
         repeat(3) {
