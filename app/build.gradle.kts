@@ -15,9 +15,7 @@ if (secretsFile.exists()) {
 
 android {
     namespace = "com.fritte.eveonline"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.fritte.eveonline"
@@ -94,6 +92,9 @@ android {
     buildFeatures {
         buildConfig = true
         compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
 }
 
