@@ -19,7 +19,7 @@ val viewModelModule = module {
     }
 
     viewModel {
-        StartupViewModel(get(), get(), get())
+        StartupViewModel(get(), get())
     }
 
     viewModel {
@@ -27,6 +27,6 @@ val viewModelModule = module {
     }
 
     viewModel {
-        NavigationViewModel()
+        NavigationViewModel(get())
     }
 }

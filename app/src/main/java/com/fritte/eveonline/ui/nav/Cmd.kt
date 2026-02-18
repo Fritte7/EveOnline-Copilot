@@ -12,5 +12,8 @@ object Cmd {
     const val CLEAR = "clear"
     const val LIMIT = "limit"
     const val QUERY = "query"
+    const val QUERY_EXPORT = "export"
+    const val QUERY_IMPORT = "import"
     const val OPEN = "open"
+    const val OPEN_SYSTEM = "system"
 }

@@ -1,13 +1,18 @@
 package com.fritte.eveonline.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.fritte.eveonline.domain.repository.VisitedSystemHistoryImportExportRepository
 import com.fritte.eveonline.ui.nav.Cmd
 import com.fritte.eveonline.ui.nav.CommandEvent
 import com.fritte.eveonline.ui.nav.NavEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
-class NavigationViewModel : ViewModel() {
+class NavigationViewModel(
+    private val visitedSystemHistoryImportExportRepository: VisitedSystemHistoryImportExportRepository,
+) : ViewModel() {
 
     private val _nav = MutableSharedFlow<NavEvent>(extraBufferCapacity = 32)
     val nav = _nav.asSharedFlow()
@@ -33,7 +38,7 @@ class NavigationViewModel : ViewModel() {
 
         when (parts.firstOrNull()?.lowercase()) {
             Cmd.CD -> when (parts.getOrNull(1)?.lowercase()) {
-                Cmd.NAV      -> emitNav(NavEvent.ToMain)
+                Cmd.NAV       -> emitNav(NavEvent.ToMain)
                 Cmd.TIM       -> emitNav(NavEvent.ToTim)
                 Cmd.DB        -> emitNav(NavEvent.ToDb)
                 Cmd.CFG       -> emitNav(NavEvent.ToCfg)
@@ -45,13 +50,30 @@ class NavigationViewModel : ViewModel() {
                 Cmd.LIMIT -> parts.getOrNull(2)?.toIntOrNull()?.let { emitCmd(CommandEvent.TimelineLimit(it)) }
             }
 
-            Cmd.QUERY -> emitCmd(CommandEvent.DbQuery(parts.drop(1).joinToString(" ")))
+            Cmd.QUERY -> when (parts.getOrNull(1)?.lowercase()) {
+                Cmd.QUERY_EXPORT -> export()
+                Cmd.QUERY_IMPORT -> import()
+            }
 
             Cmd.OPEN -> {
-                if (parts.getOrNull(1)?.lowercase() == "system") {
+                if (parts.getOrNull(1)?.lowercase() == Cmd.OPEN_SYSTEM) {
                     parts.getOrNull(2)?.toLongOrNull()?.let { emitNav(NavEvent.ToSystemDetails(it)) }
                 }
             }
+        }
+    }
+
+    private fun import() {
+        emitCmd(CommandEvent.DbQuery(Cmd.QUERY_IMPORT))
+        viewModelScope.launch {
+            visitedSystemHistoryImportExportRepository.import()
+        }
+    }
+
+    private fun export() {
+        emitCmd(CommandEvent.DbQuery(Cmd.QUERY_EXPORT))
+        viewModelScope.launch {
+            visitedSystemHistoryImportExportRepository.export()
         }
     }
 }

@@ -2,25 +2,31 @@ package com.fritte.eveonline.data.repo
 
 import android.content.Context
 import androidx.room.withTransaction
+import com.fritte.eveonline.data.model.anoikis.VisitEventJson
 import com.fritte.eveonline.data.model.anoikis.VisitEventsPayload
 import com.fritte.eveonline.data.room.AppDatabase
 import com.fritte.eveonline.data.room.entities.VisitedSystemEntity
-import com.fritte.eveonline.domain.repository.VisitedSystemHistoryImporterRepository
+import com.fritte.eveonline.domain.repository.VisitedSystemHistoryImportExportRepository
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okio.buffer
+import okio.sink
+import java.io.File
 
-class VisitedSystemHistoryImporterRepositoryImpl(
+class VisitedSystemHistoryImportExportRepositoryImpl(
     private val context: Context,
     private val db: AppDatabase,
     private val moshi: Moshi,
-) : VisitedSystemHistoryImporterRepository {
+) : VisitedSystemHistoryImportExportRepository {
 
-    override suspend fun import(): ImportResult =
+    val jsonName = "visited_system.json"
+
+    override suspend fun import(): ImportExportResult =
         withContext(Dispatchers.IO) {
             val batchSize = 1000
             val json = context.assets
-                .open("visited_system.json")
+                .open(jsonName)
                 .bufferedReader()
                 .use { it.readText() }
 
@@ -42,6 +48,7 @@ class VisitedSystemHistoryImporterRepositoryImpl(
             var inserted = 0
 
             db.withTransaction {
+                //Clear the database before inserting
                 db.visitedSystemDao().clearAll()
 
                 val buffer = ArrayList<VisitedSystemEntity>(batchSize)
@@ -79,15 +86,38 @@ class VisitedSystemHistoryImporterRepositoryImpl(
                 }
             }
 
-            // This is the value returned by withContext, and thus by import()
-            ImportResult(
-                insertedEvents = inserted,
-                missingSystems = missing.toList()
+            ImportExportResult(
+                done = true
+            )
+        }
+
+    override suspend fun export(): ImportExportResult =
+        withContext(Dispatchers.IO) {
+            val rows = db.visitedSystemDao().getVisitsForExport()
+
+            val payload = VisitEventsPayload(
+                events = rows.map { row ->
+                    VisitEventJson(
+                        systemName = row.systemName,
+                        visitedAt = row.visitedAt
+                    )
+                }
+            )
+
+            val adapter = moshi.adapter(VisitEventsPayload::class.java).indent("  ")
+            val json = adapter.toJson(payload)
+
+            val outDir = File(context.getExternalFilesDir(null), "exports").apply { mkdirs() }
+            val outFile = File(outDir, jsonName)
+
+            outFile.sink().buffer().use { it.writeUtf8(json) }
+
+            ImportExportResult(
+                done = true
             )
         }
 }
 
-data class ImportResult(
-    val insertedEvents: Int,
-    val missingSystems: List<String>
+data class ImportExportResult(
+    val done: Boolean
 )

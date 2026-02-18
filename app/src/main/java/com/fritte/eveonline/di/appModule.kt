@@ -7,7 +7,7 @@ import com.fritte.eveonline.data.repo.LocationPollerImpl
 import com.fritte.eveonline.data.repo.LocationRepositoryImpl
 import com.fritte.eveonline.data.repo.StartupRepositoryImpl
 import com.fritte.eveonline.data.repo.SystemRepositoryImpl
-import com.fritte.eveonline.data.repo.VisitedSystemHistoryImporterRepositoryImpl
+import com.fritte.eveonline.data.repo.VisitedSystemHistoryImportExportRepositoryImpl
 import com.fritte.eveonline.data.repo.VisitedSystemRepositoryImpl
 import com.fritte.eveonline.data.repo.WatchedSystemRepositoryImpl
 import com.fritte.eveonline.domain.repository.AnoikisImporterRepository
@@ -17,7 +17,7 @@ import com.fritte.eveonline.domain.repository.LocationPoller
 import com.fritte.eveonline.domain.repository.LocationRepository
 import com.fritte.eveonline.domain.repository.StartupRepository
 import com.fritte.eveonline.domain.repository.SystemRepository
-import com.fritte.eveonline.domain.repository.VisitedSystemHistoryImporterRepository
+import com.fritte.eveonline.domain.repository.VisitedSystemHistoryImportExportRepository
 import com.fritte.eveonline.domain.repository.VisitedSystemRepository
 import com.fritte.eveonline.domain.repository.WatchedSystemRepository
 import kotlinx.coroutines.CoroutineScope
@@ -52,8 +52,8 @@ val appModule = module {
         AnoikisImporterRepositoryImpl(androidContext(), get(), get())
     }
 
-    single<VisitedSystemHistoryImporterRepository> {
-        VisitedSystemHistoryImporterRepositoryImpl(androidContext(), get(), get())
+    single<VisitedSystemHistoryImportExportRepository> {
+        VisitedSystemHistoryImportExportRepositoryImpl(androidContext(), get(), get())
     }
 
     single<LocationRepository> {

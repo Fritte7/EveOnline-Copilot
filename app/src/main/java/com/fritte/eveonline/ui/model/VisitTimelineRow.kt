@@ -6,3 +6,8 @@ data class VisitTimelineRow(
     val systemId: Long,
     val systemName: String,
 )
+
+data class VisitExportRow(
+    val visitedAt: Long,
+    val systemName: String,
+)
