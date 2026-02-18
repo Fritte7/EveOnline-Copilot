@@ -1,12 +1,5 @@
 {
-  "generatedAt": "2026-01-22",
-  "timezone": "Europe/Lisbon",
-  "history": {
-    "startDate": "2025-08-25",
-    "endDate": "2026-01-22",
-    "synthetic": true,
-    "seed": 42
-  },
+  "synthetic": true,
   "events": [
     {
       "systemName": "J171142",
@@ -12903,6 +12896,966 @@
     {
       "systemName": "J114019",
       "visitedAt": 1769549586797
+    },
+    {
+      "systemName": "J164710",
+      "visitedAt": 1769640642629
+    },
+    {
+      "systemName": "J174618",
+      "visitedAt": 1769640789058
+    },
+    {
+      "systemName": "J100252",
+      "visitedAt": 1769694605881
+    },
+    {
+      "systemName": "J172422",
+      "visitedAt": 1769694699411
+    },
+    {
+      "systemName": "J103228",
+      "visitedAt": 1769701643857
+    },
+    {
+      "systemName": "J172422",
+      "visitedAt": 1769870612495
+    },
+    {
+      "systemName": "J113230",
+      "visitedAt": 1769870652841
+    },
+    {
+      "systemName": "J123528",
+      "visitedAt": 1769870695409
+    },
+    {
+      "systemName": "J130835",
+      "visitedAt": 1769871018459
+    },
+    {
+      "systemName": "J145416",
+      "visitedAt": 1769871374746
+    },
+    {
+      "systemName": "J115405",
+      "visitedAt": 1769871606846
+    },
+    {
+      "systemName": "J223824",
+      "visitedAt": 1769871838921
+    },
+    {
+      "systemName": "J111758",
+      "visitedAt": 1769872243177
+    },
+    {
+      "systemName": "J115905",
+      "visitedAt": 1769872384374
+    },
+    {
+      "systemName": "J145825",
+      "visitedAt": 1769872990052
+    },
+    {
+      "systemName": "J161745",
+      "visitedAt": 1769874495644
+    },
+    {
+      "systemName": "J104837",
+      "visitedAt": 1769938771153
+    },
+    {
+      "systemName": "J130247",
+      "visitedAt": 1769940485459
+    },
+    {
+      "systemName": "J112918",
+      "visitedAt": 1769941050781
+    },
+    {
+      "systemName": "J103008",
+      "visitedAt": 1769941434481
+    },
+    {
+      "systemName": "J000687",
+      "visitedAt": 1769941545401
+    },
+    {
+      "systemName": "J163203",
+      "visitedAt": 1769942029556
+    },
+    {
+      "systemName": "J151645",
+      "visitedAt": 1769942503480
+    },
+    {
+      "systemName": "J214440",
+      "visitedAt": 1769942614379
+    },
+    {
+      "systemName": "J120442",
+      "visitedAt": 1769942916851
+    },
+    {
+      "systemName": "J134949",
+      "visitedAt": 1769943037889
+    },
+    {
+      "systemName": "J114225",
+      "visitedAt": 1769943148802
+    },
+    {
+      "systemName": "J105858",
+      "visitedAt": 1769966287788
+    },
+    {
+      "systemName": "J133234",
+      "visitedAt": 1769966862975
+    },
+    {
+      "systemName": "J133013",
+      "visitedAt": 1769966994043
+    },
+    {
+      "systemName": "J011790",
+      "visitedAt": 1769967135632
+    },
+    {
+      "systemName": "J225133",
+      "visitedAt": 1769968124116
+    },
+    {
+      "systemName": "J232934",
+      "visitedAt": 1769968386648
+    },
+    {
+      "systemName": "J110117",
+      "visitedAt": 1769968497577
+    },
+    {
+      "systemName": "J111823",
+      "visitedAt": 1769968730225
+    },
+    {
+      "systemName": "J111740",
+      "visitedAt": 1769970028148
+    },
+    {
+      "systemName": "J132226",
+      "visitedAt": 1769970149692
+    },
+    {
+      "systemName": "J111640",
+      "visitedAt": 1769970749571
+    },
+    {
+      "systemName": "J231614",
+      "visitedAt": 1769971204036
+    },
+    {
+      "systemName": "J100702",
+      "visitedAt": 1769971508841
+    },
+    {
+      "systemName": "J142247",
+      "visitedAt": 1769971580539
+    },
+    {
+      "systemName": "J231137",
+      "visitedAt": 1769972345106
+    },
+    {
+      "systemName": "J204815",
+      "visitedAt": 1769972476167
+    },
+    {
+      "systemName": "J144743",
+      "visitedAt": 1769972597246
+    },
+    {
+      "systemName": "J213423",
+      "visitedAt": 1769972657811
+    },
+    {
+      "systemName": "J215944",
+      "visitedAt": 1769973303498
+    },
+    {
+      "systemName": "J145715",
+      "visitedAt": 1769973706674
+    },
+    {
+      "systemName": "J235525",
+      "visitedAt": 1769974171465
+    },
+    {
+      "systemName": "J143110",
+      "visitedAt": 1769974302580
+    },
+    {
+      "systemName": "J113653",
+      "visitedAt": 1769976112960
+    },
+    {
+      "systemName": "J234810",
+      "visitedAt": 1769976990658
+    },
+    {
+      "systemName": "J103948",
+      "visitedAt": 1769977469042
+    },
+    {
+      "systemName": "J122931",
+      "visitedAt": 1769977542159
+    },
+    {
+      "systemName": "J152636",
+      "visitedAt": 1769978639143
+    },
+    {
+      "systemName": "J221117",
+      "visitedAt": 1769978709702
+    },
+    {
+      "systemName": "J011563",
+      "visitedAt": 1769979092761
+    },
+    {
+      "systemName": "J152143",
+      "visitedAt": 1769982018957
+    },
+    {
+      "systemName": "J205659",
+      "visitedAt": 1769982314555
+    },
+    {
+      "systemName": "J104138",
+      "visitedAt": 1769982993271
+    },
+    {
+      "systemName": "J143200",
+      "visitedAt": 1769983114267
+    },
+    {
+      "systemName": "J151757",
+      "visitedAt": 1769983490039
+    },
+    {
+      "systemName": "J174618",
+      "visitedAt": 1769983949196
+    },
+    {
+      "systemName": "J111508",
+      "visitedAt": 1769984090832
+    },
+    {
+      "systemName": "J155117",
+      "visitedAt": 1769984211805
+    },
+    {
+      "systemName": "J154813",
+      "visitedAt": 1769984756157
+    },
+    {
+      "systemName": "J125927",
+      "visitedAt": 1769984887261
+    },
+    {
+      "systemName": "J142400",
+      "visitedAt": 1769984947808
+    },
+    {
+      "systemName": "J120252",
+      "visitedAt": 1769985744466
+    },
+    {
+      "systemName": "J120619",
+      "visitedAt": 1769986046843
+    },
+    {
+      "systemName": "J170544",
+      "visitedAt": 1769986299170
+    },
+    {
+      "systemName": "J121603",
+      "visitedAt": 1769987069135
+    },
+    {
+      "systemName": "J104328",
+      "visitedAt": 1769987324591
+    },
+    {
+      "systemName": "J003789",
+      "visitedAt": 1769987395109
+    },
+    {
+      "systemName": "J161335",
+      "visitedAt": 1769987657556
+    },
+    {
+      "systemName": "J102439",
+      "visitedAt": 1769987707926
+    },
+    {
+      "systemName": "J113432",
+      "visitedAt": 1769988002978
+    },
+    {
+      "systemName": "J150234",
+      "visitedAt": 1769988275015
+    },
+    {
+      "systemName": "J151102",
+      "visitedAt": 1769988708229
+    },
+    {
+      "systemName": "J004791",
+      "visitedAt": 1769989095030
+    },
+    {
+      "systemName": "J144704",
+      "visitedAt": 1769989296574
+    },
+    {
+      "systemName": "J113057",
+      "visitedAt": 1769989529858
+    },
+    {
+      "systemName": "J055520",
+      "visitedAt": 1770118659660
+    },
+    {
+      "systemName": "J135807",
+      "visitedAt": 1770118780798
+    },
+    {
+      "systemName": "J003793",
+      "visitedAt": 1770118871597
+    },
+    {
+      "systemName": "J010556",
+      "visitedAt": 1770120102843
+    },
+    {
+      "systemName": "J172422",
+      "visitedAt": 1770120153248
+    },
+    {
+      "systemName": "J133358",
+      "visitedAt": 1770201847767
+    },
+    {
+      "systemName": "J144153",
+      "visitedAt": 1770202451128
+    },
+    {
+      "systemName": "J055520",
+      "visitedAt": 1770311046670
+    },
+    {
+      "systemName": "J161846",
+      "visitedAt": 1770313782762
+    },
+    {
+      "systemName": "J152544",
+      "visitedAt": 1770313944397
+    },
+    {
+      "systemName": "J165953",
+      "visitedAt": 1770314075655
+    },
+    {
+      "systemName": "J104857",
+      "visitedAt": 1770314206693
+    },
+    {
+      "systemName": "J113730",
+      "visitedAt": 1770314337811
+    },
+    {
+      "systemName": "J132418",
+      "visitedAt": 1770314479062
+    },
+    {
+      "systemName": "J111458",
+      "visitedAt": 1770315077061
+    },
+    {
+      "systemName": "J162010",
+      "visitedAt": 1770315177898
+    },
+    {
+      "systemName": "J150853",
+      "visitedAt": 1770315369591
+    },
+    {
+      "systemName": "J012794",
+      "visitedAt": 1770315440160
+    },
+    {
+      "systemName": "J232715",
+      "visitedAt": 1770315571435
+    },
+    {
+      "systemName": "J221447",
+      "visitedAt": 1770315734954
+    },
+    {
+      "systemName": "J164342",
+      "visitedAt": 1770636281448
+    },
+    {
+      "systemName": "J174618",
+      "visitedAt": 1770640466584
+    },
+    {
+      "systemName": "J211036",
+      "visitedAt": 1770986713784
+    },
+    {
+      "systemName": "J151516",
+      "visitedAt": 1770986834933
+    },
+    {
+      "systemName": "J122659",
+      "visitedAt": 1770987188278
+    },
+    {
+      "systemName": "J155616",
+      "visitedAt": 1770987440519
+    },
+    {
+      "systemName": "J151643",
+      "visitedAt": 1770987551401
+    },
+    {
+      "systemName": "J150539",
+      "visitedAt": 1770987934819
+    },
+    {
+      "systemName": "J122246",
+      "visitedAt": 1770988065840
+    },
+    {
+      "systemName": "J010366",
+      "visitedAt": 1770988499234
+    },
+    {
+      "systemName": "J103448",
+      "visitedAt": 1770989204844
+    },
+    {
+      "systemName": "J171404",
+      "visitedAt": 1770989305689
+    },
+    {
+      "systemName": "J145717",
+      "visitedAt": 1770989608040
+    },
+    {
+      "systemName": "J123837",
+      "visitedAt": 1770989900299
+    },
+    {
+      "systemName": "J123246",
+      "visitedAt": 1770990465099
+    },
+    {
+      "systemName": "J235321",
+      "visitedAt": 1770990596079
+    },
+    {
+      "systemName": "J142119",
+      "visitedAt": 1770990827920
+    },
+    {
+      "systemName": "J121105",
+      "visitedAt": 1770991009297
+    },
+    {
+      "systemName": "J155214",
+      "visitedAt": 1770991825458
+    },
+    {
+      "systemName": "J000304",
+      "visitedAt": 1770992359363
+    },
+    {
+      "systemName": "J141502",
+      "visitedAt": 1770992480373
+    },
+    {
+      "systemName": "J141322",
+      "visitedAt": 1770992762513
+    },
+    {
+      "systemName": "J114014",
+      "visitedAt": 1770992853205
+    },
+    {
+      "systemName": "J142506",
+      "visitedAt": 1770992994396
+    },
+    {
+      "systemName": "J235219",
+      "visitedAt": 1770993105283
+    },
+    {
+      "systemName": "J132740",
+      "visitedAt": 1770993206107
+    },
+    {
+      "systemName": "J214654",
+      "visitedAt": 1770993306996
+    },
+    {
+      "systemName": "J143455",
+      "visitedAt": 1770993397723
+    },
+    {
+      "systemName": "J150137",
+      "visitedAt": 1770993508591
+    },
+    {
+      "systemName": "J140215",
+      "visitedAt": 1770994426844
+    },
+    {
+      "systemName": "J144553",
+      "visitedAt": 1770994769455
+    },
+    {
+      "systemName": "J143345",
+      "visitedAt": 1770994900581
+    },
+    {
+      "systemName": "J112722",
+      "visitedAt": 1770995434715
+    },
+    {
+      "systemName": "J153030",
+      "visitedAt": 1770995545566
+    },
+    {
+      "systemName": "J140932",
+      "visitedAt": 1770995999087
+    },
+    {
+      "systemName": "J125721",
+      "visitedAt": 1770996109966
+    },
+    {
+      "systemName": "J121941",
+      "visitedAt": 1770996271254
+    },
+    {
+      "systemName": "J155833",
+      "visitedAt": 1770996380298
+    },
+    {
+      "systemName": "J131618",
+      "visitedAt": 1770996964654
+    },
+    {
+      "systemName": "J144546",
+      "visitedAt": 1770997549217
+    },
+    {
+      "systemName": "J104136",
+      "visitedAt": 1770997649970
+    },
+    {
+      "systemName": "J161119",
+      "visitedAt": 1770998033835
+    },
+    {
+      "systemName": "J230047",
+      "visitedAt": 1770998195098
+    },
+    {
+      "systemName": "J141609",
+      "visitedAt": 1770998528170
+    },
+    {
+      "systemName": "J134702",
+      "visitedAt": 1770998638995
+    },
+    {
+      "systemName": "J013146",
+      "visitedAt": 1770998820445
+    },
+    {
+      "systemName": "J155313",
+      "visitedAt": 1770999143011
+    },
+    {
+      "systemName": "J123753",
+      "visitedAt": 1770999556195
+    },
+    {
+      "systemName": "J152433",
+      "visitedAt": 1770999656958
+    },
+    {
+      "systemName": "J125657",
+      "visitedAt": 1770999747640
+    },
+    {
+      "systemName": "J113530",
+      "visitedAt": 1771000030186
+    },
+    {
+      "systemName": "J145632",
+      "visitedAt": 1771000342952
+    },
+    {
+      "systemName": "J143626",
+      "visitedAt": 1771000504516
+    },
+    {
+      "systemName": "J142800",
+      "visitedAt": 1771000605270
+    },
+    {
+      "systemName": "J205738",
+      "visitedAt": 1771000746297
+    },
+    {
+      "systemName": "J162753",
+      "visitedAt": 1771001452120
+    },
+    {
+      "systemName": "J214712",
+      "visitedAt": 1771001572969
+    },
+    {
+      "systemName": "J155600",
+      "visitedAt": 1771001824772
+    },
+    {
+      "systemName": "J111029",
+      "visitedAt": 1771002137190
+    },
+    {
+      "systemName": "J130818",
+      "visitedAt": 1771002247969
+    },
+    {
+      "systemName": "J130735",
+      "visitedAt": 1771002348705
+    },
+    {
+      "systemName": "J112820",
+      "visitedAt": 1771012308742
+    },
+    {
+      "systemName": "J225316",
+      "visitedAt": 1771012409734
+    },
+    {
+      "systemName": "J122249",
+      "visitedAt": 1771012894524
+    },
+    {
+      "systemName": "J141316",
+      "visitedAt": 1771013452045
+    },
+    {
+      "systemName": "J112850",
+      "visitedAt": 1771013542790
+    },
+    {
+      "systemName": "J143040",
+      "visitedAt": 1771013845506
+    },
+    {
+      "systemName": "J102515",
+      "visitedAt": 1771014117731
+    },
+    {
+      "systemName": "J205136",
+      "visitedAt": 1771014208559
+    },
+    {
+      "systemName": "J122213",
+      "visitedAt": 1771014511683
+    },
+    {
+      "systemName": "J121416",
+      "visitedAt": 1771014612622
+    },
+    {
+      "systemName": "J104330",
+      "visitedAt": 1771014975782
+    },
+    {
+      "systemName": "J001398",
+      "visitedAt": 1771017101324
+    },
+    {
+      "systemName": "J153034",
+      "visitedAt": 1771017231478
+    },
+    {
+      "systemName": "J100142",
+      "visitedAt": 1771017322400
+    },
+    {
+      "systemName": "J213342",
+      "visitedAt": 1771017685755
+    },
+    {
+      "systemName": "J120928",
+      "visitedAt": 1771017968178
+    },
+    {
+      "systemName": "J142951",
+      "visitedAt": 1771018352504
+    },
+    {
+      "systemName": "J154354",
+      "visitedAt": 1771019109401
+    },
+    {
+      "systemName": "J141239",
+      "visitedAt": 1771019200107
+    },
+    {
+      "systemName": "J150606",
+      "visitedAt": 1771019624833
+    },
+    {
+      "systemName": "J113347",
+      "visitedAt": 1771020169664
+    },
+    {
+      "systemName": "J142520",
+      "visitedAt": 1771021158447
+    },
+    {
+      "systemName": "J130403",
+      "visitedAt": 1771022297806
+    },
+    {
+      "systemName": "J103251",
+      "visitedAt": 1771023134334
+    },
+    {
+      "systemName": "J105007",
+      "visitedAt": 1771023608126
+    },
+    {
+      "systemName": "J114355",
+      "visitedAt": 1771023930541
+    },
+    {
+      "systemName": "J151645",
+      "visitedAt": 1771024051550
+    },
+    {
+      "systemName": "J235525",
+      "visitedAt": 1771024424810
+    },
+    {
+      "systemName": "J102057",
+      "visitedAt": 1771024535639
+    },
+    {
+      "systemName": "J112956",
+      "visitedAt": 1771024797818
+    },
+    {
+      "systemName": "J121507",
+      "visitedAt": 1771024958960
+    },
+    {
+      "systemName": "J171312",
+      "visitedAt": 1771025714881
+    },
+    {
+      "systemName": "J140843",
+      "visitedAt": 1771025805524
+    },
+    {
+      "systemName": "J161257",
+      "visitedAt": 1771026158128
+    },
+    {
+      "systemName": "J151348",
+      "visitedAt": 1771026258876
+    },
+    {
+      "systemName": "J233555",
+      "visitedAt": 1771026651872
+    },
+    {
+      "systemName": "J204503",
+      "visitedAt": 1771026722589
+    },
+    {
+      "systemName": "J140019",
+      "visitedAt": 1771026823301
+    },
+    {
+      "systemName": "J130711",
+      "visitedAt": 1771026924111
+    },
+    {
+      "systemName": "J134637",
+      "visitedAt": 1771027125573
+    },
+    {
+      "systemName": "J161029",
+      "visitedAt": 1771027186013
+    },
+    {
+      "systemName": "J213753",
+      "visitedAt": 1771027347202
+    },
+    {
+      "systemName": "J141615",
+      "visitedAt": 1771027437894
+    },
+    {
+      "systemName": "J101835",
+      "visitedAt": 1771070217972
+    },
+    {
+      "systemName": "J233839",
+      "visitedAt": 1771070601257
+    },
+    {
+      "systemName": "J220151",
+      "visitedAt": 1771070702098
+    },
+    {
+      "systemName": "J100854",
+      "visitedAt": 1771070802953
+    },
+    {
+      "systemName": "J131221",
+      "visitedAt": 1771070893708
+    },
+    {
+      "systemName": "J115310",
+      "visitedAt": 1771071115576
+    },
+    {
+      "systemName": "J104210",
+      "visitedAt": 1771071528951
+    },
+    {
+      "systemName": "J131047",
+      "visitedAt": 1771071649986
+    },
+    {
+      "systemName": "J100846",
+      "visitedAt": 1771071750801
+    },
+    {
+      "systemName": "J163529",
+      "visitedAt": 1771072123798
+    },
+    {
+      "systemName": "J125956",
+      "visitedAt": 1771072265322
+    },
+    {
+      "systemName": "J220546",
+      "visitedAt": 1771072366239
+    },
+    {
+      "systemName": "J141740",
+      "visitedAt": 1771072950961
+    },
+    {
+      "systemName": "J001769",
+      "visitedAt": 1771073041699
+    },
+    {
+      "systemName": "J104723",
+      "visitedAt": 1771073142484
+    },
+    {
+      "systemName": "J213924",
+      "visitedAt": 1771073202947
+    },
+    {
+      "systemName": "J004150",
+      "visitedAt": 1771073303788
+    },
+    {
+      "systemName": "J224754",
+      "visitedAt": 1771073404578
+    },
+    {
+      "systemName": "J115530",
+      "visitedAt": 1771073495294
+    },
+    {
+      "systemName": "J151601",
+      "visitedAt": 1771081878279
+    },
+    {
+      "systemName": "J103408",
+      "visitedAt": 1771082019535
+    },
+    {
+      "systemName": "J131034",
+      "visitedAt": 1771082120529
+    },
+    {
+      "systemName": "J101408",
+      "visitedAt": 1771082463427
+    },
+    {
+      "systemName": "J164025",
+      "visitedAt": 1771082876805
+    },
+    {
+      "systemName": "J145426",
+      "visitedAt": 1771082967549
+    },
+    {
+      "systemName": "J150407",
+      "visitedAt": 1771083189413
+    },
+    {
+      "systemName": "J103716",
+      "visitedAt": 1771083290252
+    },
+    {
+      "systemName": "J120310",
+      "visitedAt": 1771083905320
+    },
+    {
+      "systemName": "J233534",
+      "visitedAt": 1771084137425
+    },
+    {
+      "systemName": "J134618",
+      "visitedAt": 1771084379458
+    },
+    {
+      "systemName": "J144632",
+      "visitedAt": 1771084480545
+    },
+    {
+      "systemName": "J115234",
+      "visitedAt": 1771084873655
+    },
+    {
+      "systemName": "J172743",
+      "visitedAt": 1771085216462
+    },
+    {
+      "systemName": "J213653",
+      "visitedAt": 1771085418044
+    },
+    {
+      "systemName": "J103453",
+      "visitedAt": 1771085791486
     }
   ]
 }
