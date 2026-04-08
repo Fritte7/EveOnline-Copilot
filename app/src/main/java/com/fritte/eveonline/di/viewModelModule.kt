@@ -3,6 +3,7 @@ package com.fritte.eveonline.di
 import com.fritte.eveonline.ui.viewmodel.AuthViewModel
 import com.fritte.eveonline.ui.viewmodel.LocationViewModel
 import com.fritte.eveonline.ui.viewmodel.NavigationViewModel
+import com.fritte.eveonline.ui.viewmodel.PollingOrchestratorViewModel
 import com.fritte.eveonline.ui.viewmodel.StartupViewModel
 import com.fritte.eveonline.ui.viewmodel.TimelineViewModel
 import org.koin.core.module.dsl.viewModel
@@ -16,6 +17,10 @@ val viewModelModule = module {
 
     viewModel {
         AuthViewModel(get(), get())
+    }
+
+    viewModel {
+        PollingOrchestratorViewModel(get(), get(), get(), get())
     }
 
     viewModel {
